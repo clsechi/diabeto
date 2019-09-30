@@ -34,11 +34,9 @@ export default function (/* { store, ssrContext } */) {
   Router.beforeEach((to, from, next) => {
     Vue.prototype.$firebase.auth().onAuthStateChanged(async (currentUser) => {
       try {
-        await getRecords();
-
-        // if (currentUser) {
-        //   await getUserData();
-        // }
+        if (currentUser) {
+          await getRecords();
+        }
       } catch (err) {
         Vue.prototype.$log.error(err);
         Notify('Something happens, try again');
