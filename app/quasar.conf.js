@@ -1,12 +1,16 @@
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
 
+/* eslint-disable */
+
 module.exports = function (ctx) {
   return {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     boot: [
-      'i18n'
+      'i18n',
+      'logger',
+      'firebase',
     ],
 
     css: [
@@ -44,7 +48,12 @@ module.exports = function (ctx) {
         'QList',
         'QItem',
         'QItemSection',
-        'QItemLabel'
+        'QItemLabel',
+        'QPageSticky',
+        'QInput',
+        'QTimeline',
+        'QTimelineEntry',
+        'QSlideItem',
       ],
 
       directives: [
@@ -61,7 +70,7 @@ module.exports = function (ctx) {
 
     build: {
       scopeHoisting: true,
-      // vueRouterMode: 'history',
+      vueRouterMode: 'history',
       // vueCompiler: true,
       // gzip: true,
       // analyze: true,
