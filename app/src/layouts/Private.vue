@@ -78,6 +78,12 @@
     <q-page-container>
       <router-view />
     </q-page-container>
+
+    <!-- <q-footer class="footer q-pb-md">
+      <div class="text-center text-black">
+        Made with ❤
+      </div>
+    </q-footer> -->
   </q-layout>
 </template>
 
@@ -117,4 +123,6 @@ export default {
 .avatar
   border-radius: 50%
   vertical-align: baseline;
+.footer
+  background none
 </style>
