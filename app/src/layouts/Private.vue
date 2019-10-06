@@ -2,18 +2,12 @@
   <q-layout view="lHh Lpr lFf">
     <q-header>
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          aria-label="Menu"
-          @click="leftDrawerOpen = !leftDrawerOpen"
-        >
-          <q-icon name="menu" />
-        </q-btn>
-
+        <component
+          :is="toolbarButton"
+          :open.sync="leftDrawerOpen"
+        />
         <q-toolbar-title>
-          Diabeto
+          {{ toolbarTitle }}
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -88,12 +82,18 @@
 </template>
 
 <script>
+import menuBtn from '../components/menuBtn';
+import backBtn from '../components/backBtn';
 
 export default {
   name: 'LayoutPrivate',
+  components: {
+    menuBtn,
+    backBtn,
+  },
   data() {
     return {
-      leftDrawerOpen: this.$q.platform.is.desktop,
+      leftDrawerOpen: this.$q.platform.is.desktop || false,
     };
   },
   computed: {
@@ -105,6 +105,12 @@ export default {
     },
     photoURL() {
       return this.$firebase.auth().currentUser.photoURL;
+    },
+    toolbarTitle() {
+      return this.$route.meta.toolbar.title;
+    },
+    toolbarButton() {
+      return `${this.$route.meta.toolbar.button}Btn`;
     },
   },
   methods: {

@@ -1,11 +1,6 @@
 <template>
-  <q-page>
+  <q-page class="q-pb-md">
     <div class="row">
-      <div class="col-12">
-        <div class="text-h6 text-center">
-          Novo registro
-        </div>
-      </div>
       <div class="col-12 q-mt-md flex justify-center">
         <RecordForm />
       </div>

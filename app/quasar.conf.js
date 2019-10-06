@@ -55,6 +55,9 @@ module.exports = function (ctx) {
         'QTimeline',
         'QTimelineEntry',
         'QSlideItem',
+        'QDate',
+        'QTime',
+        'QPopupProxy',
       ],
 
       directives: [

@@ -16,6 +16,12 @@ const routes = [
         path: '',
         component: () => import('pages/dashboard/Index.vue'),
         name: 'app',
+        meta: {
+          toolbar: {
+            title: 'Diabeto',
+            button: 'menu',
+          },
+        },
       },
       {
         path: 'records',
@@ -25,16 +31,34 @@ const routes = [
             path: '',
             component: () => import('pages/records/List.vue'),
             name: 'records',
+            meta: {
+              toolbar: {
+                title: 'Registros',
+                button: 'menu',
+              },
+            },
           },
           {
             path: 'new',
             component: () => import('pages/records/New.vue'),
             name: 'new',
+            meta: {
+              toolbar: {
+                title: 'Novo registro',
+                button: 'back',
+              },
+            },
           },
           {
             path: 'edit/:id',
             component: () => import('pages/records/Edit.vue'),
             name: 'edit',
+            meta: {
+              toolbar: {
+                title: 'Editar registro',
+                button: 'back',
+              },
+            },
           },
         ],
       },

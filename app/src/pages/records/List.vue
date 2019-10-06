@@ -1,16 +1,22 @@
 <template>
-  <q-page>
-    <q-timeline
-      color="black"
-      class="q-px-lg q-pb-md"
-    >
-      <q-timeline-entry
-        v-for="record in records"
-        :key="record.id"
-        color="orange"
-        :subtitle="formatDate(record.createdAt, 'HH:mm:ss')"
+  <q-page id="records-list">
+    <div style="max-width: 400px">
+      <q-list
+        v-for="(day, index) in recordsByDay"
+        :key="index"
+        class="q-my-sm"
+        bordered
+        separator
       >
+        <q-item-label
+          header
+          class="text-bold"
+        >
+          {{ day.formatedDate }}
+        </q-item-label>
         <q-slide-item
+          v-for="record in day.records"
+          :key="record.id"
           left-color="blue"
           right-color="red"
           @left="editRecord(record.id)"
@@ -22,14 +28,57 @@
           <template v-slot:right>
             <q-icon name="delete" />
           </template>
-          <div>Carbs: {{ record.carbs }}</div>
-          <div>Dextro: {{ record.dextro || '--' }}</div>
-          <div>Insulina Refeição: {{ record.insulin.meal.value || '--' }}</div>
-          <div>Insulina Correção: {{ record.insulin.correction.value || '--' }}</div>
-          <div>Insulina Basal: {{ record.insulin.basal.value || '--' }}</div>
+          <q-item
+            v-ripple
+            clickable
+          >
+            <q-item-section class="text-bold">
+              {{ formatDate(record.createdAt, 'HH:mm') }}
+            </q-item-section>
+            <q-item-section>
+              <ItemCircle
+                :value="record.dextro"
+                unit="mg/dL"
+                bg-color="#95BD3C"
+                shape="circle"
+              />
+            </q-item-section>
+            <q-item-section>
+              <ItemCircle
+                :value="record.carbs"
+                unit="g"
+                bg-color="#B1830A"
+                shape="square"
+              />
+            </q-item-section>
+            <q-item-section>
+              <ItemCircle
+                :value="record.insulin.meal.value"
+                unit="Units"
+                bg-color="#6b6fe3"
+                shape="drop"
+              />
+            </q-item-section>
+            <q-item-section>
+              <ItemCircle
+                :value="record.insulin.correction.value"
+                unit="Units"
+                bg-color="#996be3"
+                shape="drop"
+              />
+            </q-item-section>
+            <q-item-section>
+              <ItemCircle
+                :value="record.insulin.basal.value"
+                unit="Units"
+                bg-color="#37A394"
+                shape="drop-reverse"
+              />
+            </q-item-section>
+          </q-item>
         </q-slide-item>
-      </q-timeline-entry>
-    </q-timeline>
+      </q-list>
+    </div>
     <q-page-sticky
       position="bottom-right"
       :offset="[18, 18]"
@@ -48,11 +97,19 @@
 import { mapGetters, mapActions } from 'vuex';
 import { date } from 'quasar';
 
+import ItemCircle from './components/ItemCircle';
+
 const { formatDate } = date;
 
+// red = #ED7F5A
+
 export default {
+  components: {
+    ItemCircle,
+  },
+
   computed: {
-    ...mapGetters('record', ['records']),
+    ...mapGetters('record', ['records', 'recordsByDay']),
   },
 
   async created() {
@@ -83,3 +140,7 @@ export default {
 
 };
 </script>
+
+<style lang="stylus">
+// #records-list
+</style>
