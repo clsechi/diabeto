@@ -1,8 +1,20 @@
 <template>
-  <q-page padding>
+  <q-page
+    id="dashboard"
+    padding
+  >
     <div class="row">
-      <div class="col-12 flex flex-center">
-        <p>Registros: {{ stats }}</p>
+      <div class="col-6">
+        <StatsCard
+          title="Registros"
+          :value="stats"
+        />
+      </div>
+      <div class="col-6">
+        <StatsCard
+          title="Registros"
+          :value="stats"
+        />
       </div>
     </div>
     <q-page-sticky
@@ -21,12 +33,22 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import StatsCard from './components/StatsCard';
 
 export default {
-  name: 'PageIndex',
+  name: 'DashboardIndex',
+
+  components: {
+    StatsCard,
+  },
 
   computed: {
     ...mapGetters('record', ['stats']),
   },
 };
 </script>
+
+<style lang="stylus">
+// #dashboard
+//   background-color #D3D3D3
+</style>

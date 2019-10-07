@@ -136,6 +136,9 @@
       <q-btn
         label="Salvar"
         color="positive"
+        class="full-width"
+        style="max-width: 400px"
+        icon="done"
         :loading="loading"
         @click="defineMethod"
       />

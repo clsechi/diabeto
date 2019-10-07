@@ -1,7 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
-import 'firebase/performance';
+// import 'firebase/performance';
 import * as firebaseui from 'firebaseui';
 
 const config = {
@@ -22,7 +22,7 @@ firebase.firestore().enablePersistence();
 
 const DB = firebase.firestore();
 
-const PERF = firebase.performance();
+// const PERF = firebase.performance();
 
 const AUTH_UI = new firebaseui.auth.AuthUI(firebase.auth());
 
@@ -30,5 +30,5 @@ export default ({ Vue }) => {
   Vue.prototype.$authUI = AUTH_UI;
   Vue.prototype.$firebase = firebase;
   Vue.prototype.$firestore = DB;
-  Vue.prototype.$perf = PERF;
+  // Vue.prototype.$perf = PERF;
 };

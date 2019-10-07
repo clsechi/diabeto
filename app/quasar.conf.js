@@ -58,6 +58,8 @@ module.exports = function (ctx) {
         'QDate',
         'QTime',
         'QPopupProxy',
+        'QCard',
+        'QCardSection',
       ],
 
       directives: [
