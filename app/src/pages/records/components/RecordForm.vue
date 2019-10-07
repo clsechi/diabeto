@@ -21,10 +21,9 @@
             </q-popup-proxy>
           </q-icon>
         </template>
-
         <template v-slot:append>
           <q-icon
-            name="event"
+            name="access_time"
             class="cursor-pointer"
           >
             <q-popup-proxy
@@ -43,7 +42,7 @@
       </q-input>
     </div>
     <q-input
-      v-model="form.dextro"
+      v-model.number="form.dextro"
       filled
       clearable
       type="number"
@@ -51,38 +50,16 @@
       suffix="mg/dL"
     />
     <q-input
-      v-model="form.carbs"
+      v-model.number="form.carbs"
       filled
+      autofocus
       clearable
       type="number"
       label="Carboidratos"
       suffix="g"
     />
     <q-input
-      v-model="form.insulin.correction.value"
-      autofocus
-      filled
-      clearable
-      type="number"
-      label="Insulina correção"
-      suffix="Units"
-    />
-    <div class="flex justify-around q-mt-sm">
-      <div
-        v-for="value in commonValues"
-        :key="value"
-      >
-        <q-btn
-          color="orange-8"
-          round
-          size="12px"
-          :label="value"
-          @click="form.insulin.correction.value = value"
-        />
-      </div>
-    </div>
-    <q-input
-      v-model="form.insulin.meal.value"
+      v-model.number="form.insulin.meal.value"
       filled
       clearable
       type="number"
@@ -104,7 +81,29 @@
       </div>
     </div>
     <q-input
-      v-model="form.insulin.basal.value"
+      v-model.number="form.insulin.correction.value"
+      filled
+      clearable
+      type="number"
+      label="Insulina correção"
+      suffix="Units"
+    />
+    <div class="flex justify-around q-mt-sm">
+      <div
+        v-for="value in commonValues"
+        :key="value"
+      >
+        <q-btn
+          color="orange-8"
+          round
+          size="12px"
+          :label="value"
+          @click="form.insulin.correction.value = value"
+        />
+      </div>
+    </div>
+    <q-input
+      v-model.number="form.insulin.basal.value"
       filled
       clearable
       type="number"
@@ -126,7 +125,7 @@
       </div>
     </div>
     <q-input
-      v-model="form.note"
+      v-model.trim="form.note"
       filled
       clearable
       autogrow
@@ -157,6 +156,7 @@ export default {
     return {
       loading: false,
       commonValues: [4, 8, 10, 18],
+      recordId: this.$route.params.id,
       form: {
         time: formatDate(new Date(), 'HH:mm DD/MM/YY'),
         location: null,
@@ -191,17 +191,40 @@ export default {
     ...mapGetters('record', ['records']),
   },
 
+  beforeMount() {
+    if (this.recordId) {
+      this.mapForm();
+    }
+  },
+
   methods: {
     ...mapActions('record', [
       'createRecord',
       'updateRecord',
-      'getRecords',
     ]),
+
+    mapForm() {
+      const record = this.records.find(({ id }) => id === this.recordId);
+      if (!record) {
+        this.notFoundRecord();
+      } else {
+        const time = formatDate(record.time, 'HH:mm DD/MM/YY');
+        this.form = Object.assign({}, record, { time });
+      }
+    },
+
+    notFoundRecord() {
+      this.$q.notify({
+        message: 'Registro não encontrado!',
+      });
+      this.$log.error(`Not found record with id: ${this.recordId}`);
+      this.router.push({ name: 'records' });
+    },
 
     async defineMethod() {
       this.loading = true;
       try {
-        if (this.id) {
+        if (this.recordId) {
           await this.updateRecord(this.form);
         } else {
           await this.createRecord(this.form);

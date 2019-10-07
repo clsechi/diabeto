@@ -4,28 +4,37 @@ const userId = () => Vue.prototype.$firebase.auth().currentUser.uid;
 
 const convertDate = ({ seconds }) => new Date(seconds * 1000);
 
+const stringToDate = (raw) => {
+  const [time, date] = raw.split(' ');
+  const [day, month, year] = date.split('/');
+  const [hour, minutes] = time.split(':');
+  return new Date(`20${year}`, month - 1, day, hour, minutes);
+};
+
 export const createRecord = async ({ commit }, record) => {
   const createdAt = new Date();
-  Object.assign(record, { createdAt, updatedAt: createdAt });
+  const time = stringToDate(record.time);
+  const mapedRecord = Object.assign({}, record, { createdAt, updatedAt: createdAt, time });
 
   const { id } = await Vue.prototype.$firestore
     .collection('users').doc(userId())
-    .collection('records').add(record);
+    .collection('records').add(mapedRecord);
 
-  Object.assign(record, { id });
+  Object.assign(mapedRecord, { id });
 
-  commit('createRecord', record);
+  commit('createRecord', mapedRecord);
 };
 
 export const updateRecord = async ({ commit }, record) => {
   const updatedAt = new Date();
-  Object.assign(record, { updatedAt });
+  const time = stringToDate(record.time);
+  const mapedRecord = Object.assign({}, record, { updatedAt, time });
 
   await Vue.prototype.$firestore
     .collection('users').doc(userId())
-    .collection('records').doc(record.id)
-    .update(record);
-  commit('updateRecord', record);
+    .collection('records').doc(mapedRecord.id)
+    .update(mapedRecord);
+  commit('updateRecord', mapedRecord);
 };
 
 
@@ -50,6 +59,7 @@ export const getRecords = async ({ commit }) => {
     data.id = doc.id;
     data.createdAt = convertDate(data.createdAt);
     data.updatedAt = convertDate(data.updatedAt);
+    if (data.time) data.time = convertDate(data.time); // TODO
     return data;
   });
   commit('setRecords', result);
