@@ -52,14 +52,14 @@ export const getRecords = async ({ commit }) => {
   const snapshot = await Vue.prototype.$firestore
     .collection('users').doc(userId())
     .collection('records')
-    .orderBy('createdAt', 'desc')
+    .orderBy('time', 'desc')
     .get();
   const result = snapshot.docs.map((doc) => {
     const data = doc.data();
     data.id = doc.id;
     data.createdAt = convertDate(data.createdAt);
     data.updatedAt = convertDate(data.updatedAt);
-    if (data.time) data.time = convertDate(data.time); // TODO
+    data.time = convertDate(data.time);
     return data;
   });
   commit('setRecords', result);

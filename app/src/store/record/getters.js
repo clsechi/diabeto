@@ -9,7 +9,7 @@ const mapStats = (records) => {
 };
 
 const reduceByDay = records => records.reduce((acc, record) => {
-  const formatedDate = formatDate(record.createdAt, 'D/MM/YY');
+  const formatedDate = formatDate(record.time, 'D/MM/YY');
   const day = acc.find(ac => ac.formatedDate === formatedDate);
   if (day) {
     day.records.push(record);
