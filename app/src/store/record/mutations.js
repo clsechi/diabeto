@@ -1,5 +1,5 @@
 export const createRecord = (state, data) => {
-  state.records.push(data);
+  state.records.unshift(data);
 };
 
 export const updateRecord = (state, data) => {

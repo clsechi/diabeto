@@ -20,9 +20,7 @@ export const createRecord = async ({ commit }, record) => {
     .collection('users').doc(userId())
     .collection('records').add(mapedRecord);
 
-  Object.assign(mapedRecord, { id });
-
-  commit('createRecord', mapedRecord);
+  commit('createRecord', Object.assign({}, mapedRecord, { id }));
 };
 
 export const updateRecord = async ({ commit }, record) => {
@@ -34,6 +32,7 @@ export const updateRecord = async ({ commit }, record) => {
     .collection('users').doc(userId())
     .collection('records').doc(mapedRecord.id)
     .update(mapedRecord);
+
   commit('updateRecord', mapedRecord);
 };
 
@@ -47,8 +46,6 @@ export const deleteRecord = async ({ commit }, id) => {
 };
 
 export const getRecords = async ({ commit }) => {
-  // if (state.records.all.length > 0) return;
-
   const snapshot = await Vue.prototype.$firestore
     .collection('users').doc(userId())
     .collection('records')

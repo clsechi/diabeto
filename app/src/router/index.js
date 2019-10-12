@@ -9,9 +9,15 @@ Vue.use(VueRouter);
 
 const getRecords = async () => {
   if (!store.getters['record/records'].length) {
-    // showLoading();
     await store.dispatch('record/getRecords');
   }
+};
+
+const showApp = () => {
+  const app = document.getElementById('q-app');
+  const splashScreen = document.getElementById('splash-screen');
+  splashScreen.style.display = 'none';
+  app.style.display = 'block';
 };
 
 /*
@@ -40,6 +46,8 @@ export default function (/* { store, ssrContext } */) {
       } catch (err) {
         Vue.prototype.$log.error(err);
         Notify('Something happens, try again');
+      } finally {
+        showApp();
       }
 
       // if (currentUser && toHome(to.matched)) {

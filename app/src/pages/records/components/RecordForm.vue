@@ -158,7 +158,7 @@ export default {
   data() {
     return {
       loading: false,
-      commonValues: [4, 8, 10, 18],
+      commonValues: [4, 8, 10, 24],
       recordId: this.$route.params.id,
       form: {
         time: formatDate(new Date(), 'HH:mm DD/MM/YY'),

@@ -12,8 +12,32 @@
     <link rel="icon" type="image/ico" href="statics/icons/favicon.ico">
 
     <meta name="theme-color" content="#5889D6">
+
+    <style>
+      #splash-screen {
+        background-color: white;
+        width: 100vw;
+        height: 100vh;
+        z-index: 9998 !important;
+      }
+      #splash-screen img {
+        position: absolute;
+        width: 150px;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+      }
+      #q-app {
+        display: none;
+      }
+    </style>
   </head>
   <body>
+    <div id="splash-screen">
+      <img src="statics/logo.png" alt="Logo Diabeto">
+    </div>
     <!-- DO NOT touch the following DIV -->
     <div id="q-app"></div>
   </body>
