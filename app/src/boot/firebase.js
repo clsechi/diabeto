@@ -18,7 +18,8 @@ firebase.initializeApp(config);
 
 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
-firebase.firestore().enablePersistence();
+// firebase.firestore().enablePersistence();
+// need use realtime listerners to proper work
 
 const DB = firebase.firestore();
 
