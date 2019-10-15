@@ -20,6 +20,8 @@ const showApp = () => {
   app.style.display = 'block';
 };
 
+const toLogin = records => records.some(record => record.name === 'login');
+
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation
@@ -50,9 +52,9 @@ export default function (/* { store, ssrContext } */) {
         showApp();
       }
 
-      // if (currentUser && toHome(to.matched)) {
-      //   next({ name: 'app' });
-      // }
+      if (currentUser && toLogin(to.matched)) {
+        next({ name: 'app' });
+      }
 
       if (to.matched.some(record => record.meta.auth)) {
         if (!currentUser) {

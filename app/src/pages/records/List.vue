@@ -37,7 +37,7 @@
               clickable
             >
               <q-item-section class="text-bold">
-                {{ formatDate(record.createdAt, 'HH:mm') }}
+                {{ formatDate(record.time, 'HH:mm') }}
               </q-item-section>
               <q-item-section>
                 <ItemCircle
