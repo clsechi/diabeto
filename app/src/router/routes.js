@@ -60,6 +60,17 @@ const routes = [
               },
             },
           },
+          {
+            path: ':id',
+            component: () => import('pages/records/Show.vue'),
+            name: 'show',
+            meta: {
+              toolbar: {
+                title: 'Registro',
+                button: 'back',
+              },
+            },
+          },
         ],
       },
     ],

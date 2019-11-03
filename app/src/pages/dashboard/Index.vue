@@ -1,34 +1,39 @@
 <template>
-  <q-page
-    id="dashboard"
-    padding
+  <transition
+    appear
+    enter-active-class="animated fadeIn"
   >
-    <div class="row">
-      <div class="col-6">
-        <StatsCard
-          title="Registros"
-          :value="stats"
-        />
-      </div>
-      <div class="col-6">
-        <StatsCard
-          title="Registros"
-          :value="stats"
-        />
-      </div>
-    </div>
-    <q-page-sticky
-      position="bottom-right"
-      :offset="[18, 18]"
+    <q-page
+      id="dashboard"
+      padding
     >
-      <q-btn
-        fab
-        icon="add"
-        color="secondary"
-        @click="$router.push({ name: 'new' })"
-      />
-    </q-page-sticky>
-  </q-page>
+      <div class="row">
+        <div class="col-6">
+          <StatsCard
+            title="Registros"
+            :value="stats"
+          />
+        </div>
+        <div class="col-6">
+          <StatsCard
+            title="Registros"
+            :value="stats"
+          />
+        </div>
+      </div>
+      <q-page-sticky
+        position="bottom-right"
+        :offset="[18, 18]"
+      >
+        <q-btn
+          fab
+          icon="add"
+          color="secondary"
+          @click="$router.push({ name: 'new' })"
+        />
+      </q-page-sticky>
+    </q-page>
+  </transition>
 </template>
 
 <script>

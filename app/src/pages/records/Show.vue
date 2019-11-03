@@ -12,7 +12,7 @@
 import RecordForm from './components/RecordForm';
 
 export default {
-  name: 'Edit',
+  name: 'Show',
 
   components: {
     RecordForm,
