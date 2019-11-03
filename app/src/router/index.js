@@ -8,7 +8,7 @@ import routes from './routes';
 Vue.use(VueRouter);
 
 // TODO should go back to null when user logout
-let CURRENT_USER = null; 
+let CURRENT_USER = null;
 
 const getRecords = async () => {
   if (!store.getters['record/records'].length) {
