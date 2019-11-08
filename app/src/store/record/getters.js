@@ -1,4 +1,5 @@
 import { date } from 'quasar';
+import _ from 'lodash';
 
 const { formatDate } = date;
 
@@ -19,8 +20,16 @@ const reduceByDay = records => records.reduce((acc, record) => {
   return acc;
 }, []);
 
-export const records = state => state.records;
+// TODO dont use entire lodash
+const sortByTime = records => (
+  _.chain(records)
+    .sortBy('time')
+    .reverse()
+    .value()
+);
+
+export const records = state => sortByTime(state.records);
 
 export const stats = state => mapStats(state.records);
 
-export const recordsByDay = state => reduceByDay(state.records);
+export const recordsByDay = state => reduceByDay(sortByTime(state.records));

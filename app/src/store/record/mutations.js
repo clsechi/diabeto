@@ -1,10 +1,13 @@
+import Vue from 'vue';
+
 export const createRecord = (state, data) => {
   state.records.unshift(data);
 };
 
 export const updateRecord = (state, data) => {
-  const recordIndex = state.records.findIndex(rec => rec.id === data.id);
-  state.records[recordIndex] = data;
+  const index = state.records.findIndex(rec => rec.id === data.id);
+  const record = state.records[index];
+  Vue.set(state.records, index, Object.assign({}, record, data));
 };
 
 export const setRecords = (state, data) => {
