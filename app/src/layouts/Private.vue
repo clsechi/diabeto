@@ -88,7 +88,7 @@
       <router-view />
     </q-page-container>
 
-    <div class="text-center text-black q-my-xl">
+    <div class="text-center text-black q-mt-md q-mb-lg">
       Made with ❤ by
       <a
         href="https://github.com/clsechi/diabeto"
@@ -115,7 +115,7 @@ export default {
   },
   data() {
     return {
-      leftDrawerOpen: this.$q.platform.is.desktop || false,
+      leftDrawerOpen: this.$q.screen.width > 1024 || false,
     };
   },
   computed: {

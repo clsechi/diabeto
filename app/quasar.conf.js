@@ -118,7 +118,8 @@ module.exports = function (ctx) {
         importWorkboxFrom: 'cdn',
         exclude: [
           /\/icons\//,
-          'manifest.json'],
+          'manifest.json',
+        ],
       },
       manifest: {
         name: 'Diabeto',
