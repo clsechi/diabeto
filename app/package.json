@@ -13,21 +13,22 @@
     "deploy": "npx quasar build --mode pwa && firebase deploy --only hosting"
   },
   "dependencies": {
-    "@quasar/extras": "^1.0.0",
-    "firebase": "^7.0.0",
-    "firebaseui": "^4.2.0",
+    "@quasar/extras": "^1.3.3",
+    "chart.js": "^2.9.3",
+    "firebase": "^7.4.0",
+    "firebaseui": "^4.3.0",
     "lodash": "^4.17.15",
-    "quasar": "^1.0.0",
-    "vue-i18n": "^8.0.0",
+    "quasar": "^1.4.3",
+    "vue-i18n": "^8.15.0",
     "vuejs-logger": "^1.5.3"
   },
   "devDependencies": {
-    "@quasar/app": "^1.1.4",
+    "@quasar/app": "^1.2.4",
     "@vue/eslint-config-airbnb": "^4.0.0",
-    "babel-eslint": "^10.0.1",
-    "eslint": "^6.5.1",
-    "eslint-loader": "^2.1.1",
-    "eslint-plugin-vue": "^5.0.0"
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.6.0",
+    "eslint-loader": "^3.0.2",
+    "eslint-plugin-vue": "^6.0.1"
   },
   "engines": {
     "node": ">= 8.9.0",

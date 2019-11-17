@@ -1,14 +1,22 @@
 import Vue from 'vue';
+import { date } from 'quasar';
+
+const { subtractFromDate } = date;
 
 const userId = () => Vue.prototype.$firebase.auth().currentUser.uid;
 
 const convertDate = ({ seconds }) => new Date(seconds * 1000);
 
 const stringToDate = (raw) => {
-  const [time, date] = raw.split(' ');
-  const [day, month, year] = date.split('/');
+  const [time, formatedDate] = raw.split(' ');
+  const [day, month, year] = formatedDate.split('/');
   const [hour, minutes] = time.split(':');
   return new Date(`20${year}`, month - 1, day, hour, minutes);
+};
+
+const mapPeriod = (period) => {
+  if (!period) return new Date('2000');
+  return subtractFromDate(new Date(), { days: period });
 };
 
 export const createRecord = async ({ commit }, record) => {
@@ -36,7 +44,6 @@ export const updateRecord = async ({ commit }, record) => {
   commit('updateRecord', mapedRecord);
 };
 
-
 export const deleteRecord = async ({ commit }, id) => {
   await Vue.prototype.$firestore
     .collection('users').doc(userId())
@@ -45,12 +52,14 @@ export const deleteRecord = async ({ commit }, id) => {
   commit('deleteRecord', id);
 };
 
-export const getRecords = async ({ commit }) => {
+export const getRecords = async ({ state, commit }) => {
   const snapshot = await Vue.prototype.$firestore
     .collection('users').doc(userId())
     .collection('records')
+    .where('time', '>=', mapPeriod(state.period))
     .orderBy('time', 'desc')
     .get();
+
   const result = snapshot.docs.map((doc) => {
     const data = doc.data();
     data.id = doc.id;

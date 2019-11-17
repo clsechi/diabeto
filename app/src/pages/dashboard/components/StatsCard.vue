@@ -7,7 +7,7 @@
         {{ title }}
       </div>
       <div class="text-h4 q-pt-xs">
-        {{ value }}
+        {{ value || '--' }}
       </div>
       <div
         v-if="message"

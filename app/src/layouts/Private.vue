@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="hHh lpR fFf">
     <q-header>
       <q-toolbar>
         <component
@@ -9,6 +9,10 @@
         <q-toolbar-title>
           {{ toolbarTitle }}
         </q-toolbar-title>
+
+        <PeriodSelector
+          style="max-width: 150px"
+        />
       </q-toolbar>
     </q-header>
 
@@ -17,15 +21,26 @@
       bordered
       content-class="bg-grey-2"
     >
-      <div class="row menu text-weight-medium">
+      <div class="row menu">
         <div class="col-12">
-          <img
+          <q-img
             :src="photoURL"
             alt="avatar"
-            class="avatar q-mb-md"
+            spinner-color="primary"
+            class="avatar"
+            style="height: 50px; max-width: 50px"
           >
+            <template v-slot:error>
+              <img
+                src="statics/logo.png"
+                width="50"
+                style="background-color: white"
+              >
+              <img>
+            </template>
+          </q-img>
         </div>
-        <div class="col-12">
+        <div class="col-12 text-weight-medium">
           <span class="q-title capitalize block">{{ displayName }}</span>
           <small class="q-caption">{{ email }}</small>
         </div>
@@ -40,7 +55,7 @@
             <q-icon name="dashboard" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>App</q-item-label>
+            <q-item-label>Dashboard</q-item-label>
           </q-item-section>
         </q-item>
         <q-item
@@ -73,23 +88,30 @@
       <router-view />
     </q-page-container>
 
-    <!-- <q-footer class="footer q-pb-md">
-      <div class="text-center text-black">
-        Made with ❤
-      </div>
-    </q-footer> -->
+    <div class="text-center text-black q-my-xl">
+      Made with ❤ by
+      <a
+        href="https://github.com/clsechi/diabeto"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        @clsechi
+      </a>
+    </div>
   </q-layout>
 </template>
 
 <script>
-import menuBtn from '../components/menuBtn';
-import backBtn from '../components/backBtn';
+import PeriodSelector from 'src/components/PeriodSelector';
+import menuBtn from 'src/components/menuBtn';
+import backBtn from 'src/components/backBtn';
 
 export default {
   name: 'LayoutPrivate',
   components: {
     menuBtn,
     backBtn,
+    PeriodSelector,
   },
   data() {
     return {

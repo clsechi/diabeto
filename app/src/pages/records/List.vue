@@ -6,9 +6,15 @@
     <q-page id="records-list">
       <div class="row flex justify-center">
         <div
-          style="max-width: 400px"
+          style="max-width: 500px"
           class="col-12"
         >
+          <div
+            v-if="!recordsByDay.length"
+            class="q-mt-xl text-center text-h6"
+          >
+            Nenhum registro encontrado :(
+          </div>
           <q-list
             v-for="(day, index) in recordsByDay"
             :key="index"
@@ -20,21 +26,30 @@
               header
               class="text-bold"
             >
-              <div class="flex justify-between items-center">
-                <div> {{ day.formatedDate }} </div>
-                <q-btn
-                  icon="add"
-                  dense
-                  rounded
-                  outline
-                  size="sm"
-                  color="secondary"
-                  @click="newRecord(day.formatedDate)"
-                />
+              <div class="column">
+                <div class="flex justify-between items-center">
+                  <div> {{ day.formatedDate }} </div>
+                  <q-btn
+                    icon="add"
+                    dense
+                    rounded
+                    outline
+                    size="sm"
+                    color="secondary"
+                    @click="newRecord(day.formatedDate)"
+                  />
+                </div>
+                <div class="q-mt-md">
+                  <LineChart
+                    :id="index"
+                    :records="day.records"
+                  />
+                </div>
               </div>
             </q-item-label>
             <q-slide-item
               v-for="record in day.records"
+              :ref="`slider-${record.id}`"
               :key="record.id"
               left-color="blue"
               right-color="red"
@@ -120,6 +135,7 @@ import { mapGetters, mapActions } from 'vuex';
 import { date } from 'quasar';
 
 import ItemCircle from './components/ItemCircle';
+import LineChart from './components/LineChart';
 
 const { formatDate } = date;
 
@@ -128,6 +144,7 @@ const { formatDate } = date;
 export default {
   components: {
     ItemCircle,
+    LineChart,
   },
 
   computed: {
@@ -139,13 +156,23 @@ export default {
       'deleteRecord',
     ]),
 
-    async confirmDeleteRecord(id) {
-      try {
-        await this.deleteRecord(id);
-      } catch (error) {
-        this.$log.error(error);
-        this.$q.notify('Algo deu errado');
-      }
+    confirmDeleteRecord(id) {
+      this.$q.dialog({
+        title: 'Confirme',
+        message: 'Deletar permanentemente o registro?',
+        cancel: true,
+        persistent: true,
+      }).onOk(async () => {
+        try {
+          await this.deleteRecord(id);
+        } catch (error) {
+          this.$log.error(error);
+          this.$q.notify('Algo deu errado');
+        }
+      }).onCancel(() => {
+        const [sliderRef] = this.$refs[`slider-${id}`];
+        sliderRef.reset();
+      });
     },
 
     newRecord(formatedDate) {

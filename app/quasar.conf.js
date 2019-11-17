@@ -60,6 +60,8 @@ module.exports = function (ctx) {
         'QPopupProxy',
         'QCard',
         'QCardSection',
+        'QSelect',
+        'QImg',
       ],
 
       directives: [
@@ -69,6 +71,7 @@ module.exports = function (ctx) {
       // Quasar plugins
       plugins: [
         'Notify',
+        'Dialog',
       ]
     },
 

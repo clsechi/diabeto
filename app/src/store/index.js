@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import record from './record';
+import user from './user';
 
 Vue.use(Vuex);
 
@@ -13,6 +14,7 @@ Vue.use(Vuex);
 const Store = new Vuex.Store({
   modules: {
     record,
+    user,
   },
 
   // enable strict mode (adds overhead!)

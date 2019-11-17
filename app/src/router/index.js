@@ -32,7 +32,7 @@ const routerValidations = async (to, from, next) => {
     }
   } catch (err) {
     Vue.prototype.$log.error(err);
-    Notify('Something happens, try again');
+    Notify('Erro ao obter registros');
   } finally {
     showApp();
   }

@@ -17,3 +17,7 @@ export const setRecords = (state, data) => {
 export const deleteRecord = (state, data) => {
   state.records = state.records.filter(record => record.id !== data);
 };
+
+export const updatePeriod = (state, data) => {
+  state.period = data;
+};
