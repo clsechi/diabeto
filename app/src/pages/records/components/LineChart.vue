@@ -46,6 +46,11 @@ export default {
     this.drawChart();
   },
 
+  beforeDestroy() {
+    this.chart.destroy();
+    this.$log.debug(`Chart ${this.chartId} destroyed`);
+  },
+
   methods: {
     chartData() {
       return this.records
