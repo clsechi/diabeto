@@ -15,104 +15,30 @@
           >
             Nenhum registro encontrado :(
           </div>
-          <q-list
-            v-for="(day, index) in recordsByDay"
-            :key="index"
-            class="q-my-sm"
-            bordered
-            separator
+          <q-infinite-scroll
+            ref="scroll"
+            @load="onLoad"
           >
-            <q-item-label
-              header
-              class="text-bold"
+            <q-list
+              v-for="(day, index) in items"
+              :key="index"
+              class="q-my-sm"
+              bordered
+              separator
             >
-              <div class="column">
-                <div class="flex justify-between items-center">
-                  <div> {{ day.formatedDate }} </div>
-                  <q-btn
-                    icon="add"
-                    dense
-                    rounded
-                    outline
-                    size="sm"
-                    color="secondary"
-                    @click="newRecord(day.formatedDate)"
-                  />
-                </div>
-                <div class="q-mt-md">
-                  <LineChart
-                    :id="index"
-                    :records="day.records"
-                  />
-                </div>
+              <RecordItem
+                :day="day"
+              />
+            </q-list>
+            <template v-slot:loading>
+              <div class="row justify-center q-my-md">
+                <q-spinner-dots
+                  color="primary"
+                  size="40px"
+                />
               </div>
-            </q-item-label>
-            <q-slide-item
-              v-for="record in day.records"
-              :ref="`slider-${record.id}`"
-              :key="record.id"
-              left-color="blue"
-              right-color="red"
-              @left="editRecord(record.id)"
-              @right="confirmDeleteRecord(record.id)"
-            >
-              <template v-slot:left>
-                <q-icon name="edit" />
-              </template>
-              <template v-slot:right>
-                <q-icon name="delete" />
-              </template>
-              <q-item
-                v-ripple
-                clickable
-                @click="showRecord(record.id)"
-              >
-                <q-item-section class="text-bold">
-                  {{ formatDate(record.time, 'HH:mm') }}
-                </q-item-section>
-                <q-item-section>
-                  <ItemCircle
-                    :value="record.dextro"
-                    unit="mg/dL"
-                    bg-color="#95BD3C"
-                    shape="circle"
-                  />
-                </q-item-section>
-                <q-item-section>
-                  <ItemCircle
-                    :value="record.carbs"
-                    unit="g"
-                    bg-color="#B1830A"
-                    shape="square"
-                  />
-                </q-item-section>
-                <q-item-section>
-                  <ItemCircle
-                    :value="record.insulin.meal.value"
-                    unit="Units"
-                    bg-color="#6b6fe3"
-                    shape="drop"
-                  />
-                </q-item-section>
-                <q-item-section>
-                  <ItemCircle
-                    :value="record.insulin.correction.value"
-                    unit="Units"
-                    bg-color="#996be3"
-                    shape="drop"
-                  />
-                </q-item-section>
-                <q-item-section>
-                  <ItemCircle
-                    :value="record.insulin.basal.value"
-                    unit="Units"
-                    bg-color="#37A394"
-                    shape="drop-reverse"
-                  />
-                </q-item-section>
-              </q-item>
-            </q-slide-item>
-          </q-list>
+            </template>
+          </q-infinite-scroll>
         </div>
       </div>
       <q-page-sticky
@@ -131,63 +57,60 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
-import { date } from 'quasar';
-
-import ItemCircle from './components/ItemCircle';
-import LineChart from './components/LineChart';
-
-const { formatDate } = date;
-
-// red = #ED7F5A
+import { mapGetters } from 'vuex';
+import RecordItem from './components/RecordItem';
 
 export default {
   components: {
-    ItemCircle,
-    LineChart,
+    RecordItem,
+  },
+
+  data() {
+    return {
+      items: [],
+    };
   },
 
   computed: {
-    ...mapGetters('record', ['records', 'recordsByDay']),
+    ...mapGetters('record', ['period', 'recordsByDay']),
+  },
+
+
+  watch: {
+    /**
+     *  Reset the scroll behavior when the current period is updated
+     */
+    period() {
+      this.resetScroll();
+    },
+  },
+
+  mounted() {
+    this.upgradeList(1);
   },
 
   methods: {
-    ...mapActions('record', [
-      'deleteRecord',
-    ]),
-
-    confirmDeleteRecord(id) {
-      this.$q.dialog({
-        title: 'Confirme',
-        message: 'Deletar permanentemente o registro?',
-        cancel: true,
-        persistent: true,
-      }).onOk(async () => {
-        try {
-          await this.deleteRecord(id);
-        } catch (error) {
-          this.$log.error(error);
-          this.$q.notify('Algo deu errado');
-        }
-      }).onCancel(() => {
-        const [sliderRef] = this.$refs[`slider-${id}`];
-        sliderRef.reset();
-      });
+    /**
+     * @param {number} index A integer that multiplied by 5, define the size of the current list
+     */
+    upgradeList(index) {
+      this.items = this.recordsByDay.slice(0, index * 5);
     },
 
-    newRecord(formatedDate) {
-      this.$router.push({ name: 'new', query: { date: formatedDate } });
+    resetScroll() {
+      this.$refs.scroll.resume();
     },
-
-    editRecord(id) {
-      this.$router.push({ name: 'edit', params: { id } });
+    /**
+     * Called by InfiniteScroll to load more data to list
+     * Uses a setTimeout for better UX and when period is updated on the end of scroll
+     */
+    onLoad(index, done) {
+      setTimeout(() => {
+        this.upgradeList(index);
+        const stop = this.items.length === this.recordsByDay.length;
+        done(stop);
+      }, 2000);
     },
-
-    showRecord(id) {
-      this.$router.push({ name: 'show', params: { id } });
-    },
-
-    formatDate,
   },
 
 };

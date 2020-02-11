@@ -1,4 +1,15 @@
-
+/**
+ * Follows default Vue Router route object
+ *
+ * @property {object} meta Define the meta data of a specific routes and children
+ *
+ * @property {booelan} auth  define if routes need a logged user
+ *
+ * @property {object} toolbar define the toolbar behavior on the current route
+ * @property {title} title Define the title displayed on toolbar
+ * @property {title} button Define if the button represents a menu or
+ * back button, each one have a specfic action
+ */
 const routes = [
   {
     path: '/login',
@@ -72,6 +83,28 @@ const routes = [
             },
           },
         ],
+      },
+      {
+        path: 'settings',
+        component: () => import('pages/settings/Index.vue'),
+        name: 'settings',
+        meta: {
+          toolbar: {
+            title: 'Configurações',
+            button: 'menu',
+          },
+        },
+      },
+      {
+        path: 'about',
+        component: () => import('pages/about/Index.vue'),
+        name: 'about',
+        meta: {
+          toolbar: {
+            title: 'Sobre',
+            button: 'menu',
+          },
+        },
       },
     ],
   },

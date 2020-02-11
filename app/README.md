@@ -1,4 +1,4 @@
-# Diabeto (diabeto)
+# Diabeto - App
 
 A Quasar Framework app
 

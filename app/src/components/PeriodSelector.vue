@@ -44,8 +44,8 @@ export default {
         value: 90,
         label: '90 dias',
       }, {
-        value: 0,
-        label: 'Todos',
+        value: 180,
+        label: '180 dias',
       }],
     };
   },

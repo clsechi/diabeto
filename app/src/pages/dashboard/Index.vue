@@ -29,15 +29,21 @@
         <div class="col-6">
           <StatsCard
             title="Eventos de hipo"
-            :value="0"
+            :value="stats.total.hypoEvents"
           />
         </div>
         <div class="col-6">
           <StatsCard
+            title="Eventos de hiper"
+            :value="stats.total.hyperEvents"
+          />
+        </div>
+        <!-- <div class="col-6">
+          <StatsCard
             title="Média teste p/ dia"
             :value="0"
           />
-        </div>
+        </div> -->
         <div class="col-6">
           <StatsCard
             title="Total dextros"

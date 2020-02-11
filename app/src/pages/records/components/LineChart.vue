@@ -14,10 +14,6 @@ export default {
   name: 'LineChart',
 
   props: {
-    id: {
-      type: Number,
-      required: true,
-    },
     records: {
       type: Array,
       required: true,

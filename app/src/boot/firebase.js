@@ -18,6 +18,8 @@ firebase.initializeApp(config);
 
 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
+// firebase.firestore.setLogLevel('debug');
+
 // firebase.firestore().enablePersistence();
 // need use realtime listerners to proper work
 

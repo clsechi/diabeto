@@ -31,7 +31,13 @@ export const createRecord = async ({ commit }, record) => {
   commit('createRecord', Object.assign({}, mapedRecord, { id }));
 };
 
+/**
+ * Remove createdAt from object, because this value is not editable
+ * @param {object} record A record object with the values to update
+ */
 export const updateRecord = async ({ commit }, record) => {
+  delete record.createdAt;
+
   const updatedAt = new Date();
   const time = stringToDate(record.time);
   const mapedRecord = Object.assign({}, record, { updatedAt, time });

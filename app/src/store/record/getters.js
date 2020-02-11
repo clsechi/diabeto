@@ -108,6 +108,20 @@ const hourAverage = records => (
     }))
 );
 
+const findHypoEvents = (dextros) => {
+  const minTarget = 80;
+  return dextros
+    .filter(dextro => dextro <= minTarget)
+    .length;
+};
+
+const findHyperEvents = (dextros) => {
+  const maxTarget = 150;
+  return dextros
+    .filter(dextro => dextro >= maxTarget)
+    .length;
+};
+
 const totalStats = (records) => {
   const dextros = mapByKey(records, 'dextro');
 
@@ -116,11 +130,16 @@ const totalStats = (records) => {
   const higher = max(dextros);
   const lower = min(dextros);
 
+  const hypoEvents = findHypoEvents(dextros);
+  const hyperEvents = findHyperEvents(dextros);
+
   return {
     count,
     average,
     higher,
     lower,
+    hypoEvents,
+    hyperEvents,
     averageUnit: 0,
   };
 };

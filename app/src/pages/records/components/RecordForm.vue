@@ -8,7 +8,7 @@
         <q-input
           v-model="form.time"
           filled
-          :readonly="readonly"
+          :readonly="true"
         >
           <template v-slot:prepend>
             <q-icon
@@ -225,7 +225,7 @@ export default {
         this.notFoundRecord();
       } else {
         const time = formatDate(record.time, 'HH:mm DD/MM/YY');
-        this.form = Object.assign({}, record, { time });
+        this.form = JSON.parse(JSON.stringify(Object.assign({}, record, { time })));
       }
     },
 

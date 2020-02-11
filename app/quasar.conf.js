@@ -8,8 +8,9 @@ module.exports = function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     boot: [
-      'i18n',
+      // 'i18n',
       'logger',
+      'sentry',
       'firebase',
     ],
 
@@ -33,36 +34,15 @@ module.exports = function (ctx) {
       // iconSet: 'ionicons-v4',
       // lang: 'de', // Quasar language
 
-      // all: true, // --- includes everything; for dev only!
+      // Possible values for "all":
+      // * 'auto' - Auto-import needed Quasar components & directives
+      //            (slightly higher compile time; next to minimum bundle size; most convenient)
+      // * false  - Manually specify what to import
+      //            (fastest compile time; minimum bundle size; most tedious)
+      // * true   - Import everything from Quasar
+      //            (not treeshaking Quasar; biggest bundle size; convenient)
 
-      components: [
-        'QLayout',
-        'QHeader',
-        'QFooter',
-        'QDrawer',
-        'QPageContainer',
-        'QPage',
-        'QToolbar',
-        'QToolbarTitle',
-        'QBtn',
-        'QIcon',
-        'QList',
-        'QItem',
-        'QItemSection',
-        'QItemLabel',
-        'QPageSticky',
-        'QInput',
-        'QTimeline',
-        'QTimelineEntry',
-        'QSlideItem',
-        'QDate',
-        'QTime',
-        'QPopupProxy',
-        'QCard',
-        'QCardSection',
-        'QSelect',
-        'QImg',
-      ],
+      all: 'auto',
 
       directives: [
         'Ripple'
@@ -72,7 +52,19 @@ module.exports = function (ctx) {
       plugins: [
         'Notify',
         'Dialog',
-      ]
+      ],
+
+      config: {
+        notify: {
+          position: 'bottom',
+          color: 'negative',
+          timeout: 1500,
+          textColor: 'white',
+          actions: [{ icon: 'close', color: 'white' }],
+        },
+      },
+
+      lang: 'pt-br',
     },
 
     supportIE: false,
@@ -94,7 +86,10 @@ module.exports = function (ctx) {
             formatter: require('eslint').CLIEngine.getFormatter('stylish')
           }
         })
-      }
+      },
+      env: {
+        VERSION: JSON.stringify(require('./package.json').version),
+      },
     },
 
     devServer: {

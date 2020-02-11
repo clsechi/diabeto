@@ -70,6 +70,30 @@
             <q-item-label>Registros</q-item-label>
           </q-item-section>
         </q-item>
+        <!-- <q-item
+          clickable
+          :to="{ name: 'settings' }"
+          exact
+        >
+          <q-item-section avatar>
+            <q-icon name="settings" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Configurações</q-item-label>
+          </q-item-section>
+        </q-item> -->
+        <q-item
+          clickable
+          :to="{ name: 'about' }"
+          exact
+        >
+          <q-item-section avatar>
+            <q-icon name="explore" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Sobre</q-item-label>
+          </q-item-section>
+        </q-item>
         <q-item
           clickable
           @click="signOut"
@@ -87,17 +111,6 @@
     <q-page-container>
       <router-view />
     </q-page-container>
-
-    <div class="text-center text-black q-mt-md q-mb-lg">
-      Made with ❤ by
-      <a
-        href="https://github.com/clsechi/diabeto"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        @clsechi
-      </a>
-    </div>
   </q-layout>
 </template>
 
