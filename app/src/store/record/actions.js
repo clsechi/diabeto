@@ -1,9 +1,11 @@
 import Vue from 'vue';
 import { date } from 'quasar';
 
+import { getAllRecords } from 'src/services/functions';
+
 const { subtractFromDate } = date;
 
-const userId = () => Vue.prototype.$firebase.auth().currentUser.uid;
+const getUserId = () => Vue.prototype.$firebase.auth().currentUser.uid;
 
 const convertDate = ({ seconds }) => new Date(seconds * 1000);
 
@@ -16,7 +18,7 @@ const stringToDate = (raw) => {
 
 const mapPeriod = (period) => {
   if (!period) return new Date('2000');
-  return subtractFromDate(new Date(), { days: period });
+  return subtractFromDate(new Date(), { days: period }); // TODO do not user hours
 };
 
 export const createRecord = async ({ commit }, record) => {
@@ -25,7 +27,7 @@ export const createRecord = async ({ commit }, record) => {
   const mapedRecord = Object.assign({}, record, { createdAt, updatedAt: createdAt, time });
 
   const { id } = await Vue.prototype.$firestore
-    .collection('users').doc(userId())
+    .collection('users').doc(getUserId())
     .collection('records').add(mapedRecord);
 
   commit('createRecord', Object.assign({}, mapedRecord, { id }));
@@ -43,7 +45,7 @@ export const updateRecord = async ({ commit }, record) => {
   const mapedRecord = Object.assign({}, record, { updatedAt, time });
 
   await Vue.prototype.$firestore
-    .collection('users').doc(userId())
+    .collection('users').doc(getUserId())
     .collection('records').doc(mapedRecord.id)
     .update(mapedRecord);
 
@@ -52,21 +54,21 @@ export const updateRecord = async ({ commit }, record) => {
 
 export const deleteRecord = async ({ commit }, id) => {
   await Vue.prototype.$firestore
-    .collection('users').doc(userId())
+    .collection('users').doc(getUserId())
     .collection('records').doc(id)
     .delete();
   commit('deleteRecord', id);
 };
 
-export const getRecords = async ({ state, commit }) => {
+const getFirestoreRecords = (period) => {
   const snapshot = await Vue.prototype.$firestore
-    .collection('users').doc(userId())
+    .collection('users').doc(getUserId())
     .collection('records')
-    .where('time', '>=', mapPeriod(state.period))
+    .where('time', '>=', mapPeriod(period))
     .orderBy('time', 'desc')
     .get();
 
-  const result = snapshot.docs.map((doc) => {
+  return snapshot.docs.map((doc) => {
     const data = doc.data();
     data.id = doc.id;
     data.createdAt = convertDate(data.createdAt);
@@ -74,5 +76,21 @@ export const getRecords = async ({ state, commit }) => {
     data.time = convertDate(data.time);
     return data;
   });
+};
+
+const getFunctionsRecords = async (userId, period) => {
+  const { data } = getAllRecords(userId, period);
+  return data;
+};
+
+export const getRecords = async ({ state, commit }) => {
+  let result;
+  const { period } = state;
+
+  if (tokenAccess) {
+    result = await getFunctionsRecords(userId, period);
+  } else {
+    result = await getFirestoreRecords(period)
+  }
   commit('setRecords', result);
 };

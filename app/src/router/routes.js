@@ -17,6 +17,20 @@ const routes = [
     name: 'login',
   },
   {
+    path: '/doctor',
+    component: () => import('pages/layouts/Doctor.vue'),
+    mets: {
+      token: true,
+    },
+    children: [
+      {
+        path: '',
+        component: () => import('pages/doctor/Index.vue'),
+        name: 'doctor',
+      }
+    ],
+  },
+  {
     path: '/',
     component: () => import('layouts/Private.vue'),
     meta: {
