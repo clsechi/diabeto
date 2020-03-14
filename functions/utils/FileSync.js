@@ -1,4 +1,4 @@
-process.env.TZ = 'America/Sao_Paulo' 
+process.env.TZ = 'America/Sao_Paulo';
 
 const admin = require('firebase-admin');
 const CSV = require('csvtojson');
@@ -8,22 +8,20 @@ const serviceAccount = require('../diabeto-7ba34-firebase-adminsdk-vs7xd-011143e
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://diabeto-7ba34.firebaseio.com"
+  databaseURL: 'https://diabeto-7ba34.firebaseio.com',
 });
 
 const db = admin.firestore();
 
 const USER_ID = '';
 
-const parseCSV = (path) => {
-  return CSV().fromFile(path);
-}
+const parseCSV = path => CSV().fromFile(path);
 
 const mapDate = (date) => {
-  const dateParsed = moment(date, 'DD/MM/YY HH:mm', true)
+  const dateParsed = moment(date, 'DD/MM/YY HH:mm', true);
   if (!dateParsed.isValid()) {
-    const error = new Error('Invalid Date')
-    error.details = `date: ${date}`
+    const error = new Error('Invalid Date');
+    error.details = `date: ${date}`;
     throw error;
   }
   return dateParsed.toDate();
@@ -34,7 +32,7 @@ const mapItem = (item) => {
     time: mapDate(item['Time Record']),
     createdAt: moment().toDate(),
     updatedAt: moment().toDate(),
-    dextro: parseInt(item['Dextro'], 10),
+    dextro: parseInt(item.Dextro, 10),
     location: null,
     type: null,
     carbs: null,
@@ -60,14 +58,12 @@ const mapItem = (item) => {
     },
   };
   return data;
-}
+};
 
-const uploadData = (items) => {
-  return Promise.all(items.map(item => (
-    db.collection('users').doc(USER_ID)
+const uploadData = items => Promise.all(items.map(item => (
+  db.collection('users').doc(USER_ID)
     .collection('records').add(item)
-  )))
-}
+)));
 
 (async function init() {
   try {
@@ -76,8 +72,8 @@ const uploadData = (items) => {
     const items = await parseCSV('./dados.csv');
     const mapedItems = items.map(item => mapItem(item));
     const data = await uploadData(mapedItems);
-    
-    data.forEach(item => console.log(item.id))
+
+    data.forEach(item => console.log(item.id));
 
     console.log('Done! :)');
     process.exit(0);
