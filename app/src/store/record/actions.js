@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import { date } from 'quasar';
 
-const { subtractFromDate } = date;
+const { subtractFromDate, startOfDate } = date;
 
 const userId = () => Vue.prototype.$firebase.auth().currentUser.uid;
 
@@ -16,7 +16,8 @@ const stringToDate = (raw) => {
 
 const mapPeriod = (period) => {
   if (!period) return new Date('2000');
-  return subtractFromDate(new Date(), { days: period });
+  const periodAsDate = subtractFromDate(new Date(), { days: period });
+  return startOfDate(periodAsDate, 'day');
 };
 
 export const createRecord = async ({ commit }, record) => {
