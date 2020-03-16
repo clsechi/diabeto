@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.1] - 2020-03-16
+
+- Fixed problem with wrong color of sw new version notify
+
 ## [1.1.0] - 2020-03-16
 
 - Fixed period that does not start at the beginning of the day - [#22](https://trello.com/c/Og9bnQVr/22-bug-periodo)
