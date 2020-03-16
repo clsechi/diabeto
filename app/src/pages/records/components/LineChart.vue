@@ -44,7 +44,6 @@ export default {
 
   beforeDestroy() {
     this.chart.destroy();
-    this.$log.debug(`Chart ${this.chartId} destroyed`);
   },
 
   methods: {
@@ -107,7 +106,6 @@ export default {
     drawChart() {
       const ctx = document.getElementById(this.chartId).getContext('2d');
       this.chart = new Chart(ctx, this.chartConfig());
-      this.$log.debug(`Chart ${this.chartId} created`);
     },
   },
 };
