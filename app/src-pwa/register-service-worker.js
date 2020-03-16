@@ -34,6 +34,7 @@ register(process.env.SERVICE_WORKER_FILE, {
     Notify.create({
       message: 'Nova versão disponível',
       timeout: 30000,
+      color: 'primary',
       actions: [
         {
           label: 'Atualizar',
