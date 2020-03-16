@@ -39,6 +39,12 @@
               </div>
             </template>
           </q-infinite-scroll>
+          <div
+            v-if="showingAll"
+            class="q-my-md text-center text-h6"
+          >
+            Altere o período atual para exibir mais registros.
+          </div>
         </div>
       </div>
       <q-page-sticky
@@ -68,6 +74,7 @@ export default {
   data() {
     return {
       items: [],
+      showingAll: false,
     };
   },
 
@@ -91,7 +98,8 @@ export default {
 
   methods: {
     /**
-     * @param {number} index A integer that multiplied by 5, define the size of the current list
+     * Define the records on current list
+     * @param {number} index Size of the current list
      */
     upgradeList(index) {
       this.items = this.recordsByDay.slice(0, index * 5);
@@ -103,13 +111,17 @@ export default {
     /**
      * Called by InfiniteScroll to load more data to list
      * Uses a setTimeout for better UX and when period is updated on the end of scroll
+     * Update showing all status if all records are already loaded
+     * @param {number} index Size of current list
+     * @param {callback} done Called with boolean to load or not more data
      */
     onLoad(index, done) {
       setTimeout(() => {
         this.upgradeList(index);
         const stop = this.items.length === this.recordsByDay.length;
+        this.showingAll = stop;
         done(stop);
-      }, 2000);
+      }, 1000);
     },
   },
 

@@ -1,7 +1,7 @@
 export default {
   // TODO get data from Firestore
   target: {
-    max: 150,
+    max: 160,
     min: 80,
   },
 };

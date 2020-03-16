@@ -4,9 +4,14 @@
     enter-active-class="animated fadeIn"
   >
     <div class="q-gutter-md form-size">
+      <LocationInput
+        :location.sync="form.location"
+        :readonly="readonly"
+      />
       <div>
         <q-input
           v-model="form.time"
+          label="Data"
           filled
           :readonly="true"
         >
@@ -144,6 +149,7 @@ import { mapGetters, mapActions } from 'vuex';
 import { date } from 'quasar';
 
 import ButtonsRow from './ButtonsRow';
+import LocationInput from './LocationInput';
 
 const { formatDate } = date;
 
@@ -151,6 +157,7 @@ export default {
   name: 'RecordForm',
   components: {
     ButtonsRow,
+    LocationInput,
   },
 
   data() {

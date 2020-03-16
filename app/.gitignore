@@ -18,3 +18,7 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+
+# Unused quasar files
+pwa-flag.d.ts
+store-flag.d.ts
