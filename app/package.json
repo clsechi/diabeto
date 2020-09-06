@@ -20,7 +20,7 @@
     "chart.js": "^2.9.3",
     "firebase": "^7.14.5",
     "firebaseui": "^4.5.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "quasar": "^1.11.3",
     "vue-i18n": "^8.17.7",
     "vuejs-logger": "^1.5.4"
