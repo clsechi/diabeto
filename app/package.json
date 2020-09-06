@@ -13,26 +13,26 @@
     "deploy": "npx quasar build --mode pwa && firebase deploy --only hosting"
   },
   "dependencies": {
-    "@quasar/extras": "^1.8.1",
-    "@sentry/browser": "^5.15.5",
-    "@sentry/integrations": "^5.15.5",
+    "@quasar/extras": "^1.9.5",
+    "@sentry/browser": "^5.22.3",
+    "@sentry/integrations": "^5.22.3",
     "axios": "^0.19.2",
     "chart.js": "^2.9.3",
-    "firebase": "^7.14.5",
-    "firebaseui": "^4.5.0",
-    "lodash": "^4.17.15",
-    "quasar": "^1.11.3",
-    "vue-i18n": "^8.17.7",
+    "firebase": "^7.19.1",
+    "firebaseui": "^4.6.1",
+    "lodash": "^4.17.20",
+    "quasar": "^1.13.2",
+    "vue-i18n": "^8.21.0",
     "vuejs-logger": "^1.5.4"
   },
   "devDependencies": {
-    "@quasar/app": "^1.8.10",
+    "@quasar/app": "^1.9.6",
     "@vue/eslint-config-airbnb": "^4.0.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.8.0",
     "eslint-loader": "^3.0.4",
     "eslint-plugin-vue": "^6.2.2",
-    "jest": "^26.0.1"
+    "jest": "^26.4.2"
   },
   "engines": {
     "node": ">= 8.9.0",
