@@ -3,10 +3,14 @@
     appear
     enter-active-class="animated fadeIn"
   >
-    <div class="q-gutter-md form-size">
+    <div
+      id="record-form"
+      class="q-gutter-md"
+    >
       <LocationInput
-        :location.sync="form.location"
+        :record-location.sync="form.location"
         :readonly="readonly"
+        :new-record="newRecord"
       />
       <div>
         <q-input
@@ -155,43 +159,30 @@ const { formatDate } = date;
 
 export default {
   name: 'RecordForm',
+
   components: {
     ButtonsRow,
     LocationInput,
+  },
+
+  props: {
+    id: {
+      type: String,
+      required: false,
+      default: null,
+    },
+    fixedDate: {
+      type: String,
+      required: false,
+      default: null,
+    },
   },
 
   data() {
     return {
       loading: false,
       commonValues: [4, 8, 10, 24],
-      recordId: this.$route.params.id,
-      form: {
-        time: this.getDate(),
-        location: null,
-        type: null,
-        carbs: null,
-        dextro: null,
-        note: null,
-        tags: [],
-        images: [],
-        insulin: {
-          basal: {
-            type: 'glargina',
-            commonName: 'Lantus',
-            value: null,
-          },
-          correction: {
-            type: 'humalog',
-            commonName: 'Lispro',
-            value: null,
-          },
-          meal: {
-            type: 'humalog',
-            commonName: 'Lispro',
-            value: null,
-          },
-        },
-      },
+      form: {},
     };
   },
 
@@ -201,10 +192,21 @@ export default {
     readonly() {
       return this.$route.name === 'show';
     },
+
+    recordId() {
+      return this.id || this.$route.params.id;
+    },
+
+    newRecord() {
+      return !this.recordId;
+    },
+  },
+
+  created() {
+    this.resetForm();
   },
 
   beforeMount() {
-    this.getDate();
     if (this.recordId) {
       this.mapForm();
     }
@@ -217,7 +219,8 @@ export default {
     ]),
 
     getDate() {
-      const { date: recordDate } = this.$route.query;
+      const { date: recordDateQuery } = this.$route.query;
+      const recordDate = this.fixedDate || recordDateQuery;
       if (recordDate) {
         const [day, month, year] = recordDate.split('/');
         const asDate = new Date(`20${year}`, month - 1, day);
@@ -244,6 +247,36 @@ export default {
       this.router.push({ name: 'records' });
     },
 
+    resetForm() {
+      this.form = {
+        time: this.getDate(),
+        location: null,
+        type: null,
+        carbs: null,
+        dextro: null,
+        note: null,
+        tags: [],
+        images: [],
+        insulin: {
+          basal: {
+            type: 'glargina',
+            commonName: 'Lantus',
+            value: null,
+          },
+          correction: {
+            type: 'humalog',
+            commonName: 'Lispro',
+            value: null,
+          },
+          meal: {
+            type: 'humalog',
+            commonName: 'Lispro',
+            value: null,
+          },
+        },
+      };
+    },
+
     async defineMethod() {
       this.loading = true;
       try {
@@ -256,7 +289,7 @@ export default {
           color: 'positive',
           message: this.message || 'Sucesso',
         });
-        this.$router.push({ name: 'records' });
+        this.$emit('completed');
       } catch (err) {
         this.$log.error('defineMethod', err);
         this.$q.notify({
@@ -269,3 +302,7 @@ export default {
   },
 };
 </script>
+
+<style lang="stylus">
+// #record-form
+</style>

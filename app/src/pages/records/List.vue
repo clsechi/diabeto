@@ -1,85 +1,95 @@
 <template>
-  <transition
-    appear
-    enter-active-class="animated fadeIn"
-  >
-    <q-page id="records-list">
-      <div class="row flex justify-center">
-        <div
-          style="max-width: 500px"
-          class="col-12"
-        >
+  <div>
+    <transition
+      appear
+      enter-active-class="animated fadeIn"
+    >
+      <q-page id="records-list">
+        <div class="row flex justify-center">
           <div
-            v-if="!recordsByDay.length"
-            class="q-mt-xl text-center text-h6"
+            style="max-width: 500px"
+            class="col-12"
           >
-            Nenhum registro encontrado :(
-          </div>
-          <q-infinite-scroll
-            ref="scroll"
-            @load="onLoad"
-          >
-            <q-list
-              v-for="(day, index) in items"
-              :key="index"
-              class="q-my-sm"
-              bordered
-              separator
+            <div
+              v-if="!recordsByDay.length"
+              class="q-mt-xl text-center text-h6"
             >
-              <RecordItem
-                :day="day"
-              />
-            </q-list>
-            <template v-slot:loading>
-              <div class="row justify-center q-my-md">
-                <q-spinner-dots
-                  color="primary"
-                  size="40px"
+              Nenhum registro encontrado :(
+            </div>
+            <q-infinite-scroll
+              ref="scroll"
+              @load="onLoad"
+            >
+              <q-list
+                v-for="(day, index) in items"
+                :key="index"
+                class="q-my-sm"
+                bordered
+                separator
+              >
+                <RecordItem
+                  :day="day"
                 />
-              </div>
-            </template>
-          </q-infinite-scroll>
-          <div
-            v-if="showingAll"
-            class="q-my-md text-center text-h6"
-          >
-            Altere o período atual para exibir mais registros.
+              </q-list>
+              <template v-slot:loading>
+                <div class="row justify-center q-my-md">
+                  <q-spinner-dots
+                    color="primary"
+                    size="40px"
+                  />
+                </div>
+              </template>
+            </q-infinite-scroll>
+            <div
+              v-if="showingAll"
+              class="q-my-md text-center text-h6"
+            >
+              Altere o período atual para exibir mais registros.
+            </div>
           </div>
         </div>
-      </div>
-      <q-page-sticky
-        position="bottom-right"
-        :offset="[18, 18]"
-      >
-        <q-btn
-          fab
-          icon="add"
-          color="secondary"
-          @click="$router.push({ name: 'new' })"
-        />
-      </q-page-sticky>
-    </q-page>
-  </transition>
+        <q-page-sticky
+          position="bottom-right"
+          :offset="[18, 18]"
+        >
+          <q-btn
+            fab
+            icon="add"
+            color="secondary"
+            @click="openModal = true"
+          />
+        </q-page-sticky>
+      </q-page>
+    </transition>
+    <NewRecordModal :open.sync="openModal" />
+  </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import RecordItem from './components/RecordItem';
+import NewRecordModal from './components/NewRecordModal';
 
 export default {
   components: {
     RecordItem,
+    NewRecordModal,
   },
 
   data() {
     return {
-      items: [],
       showingAll: false,
+      openModal: false,
+      listIndex: 1,
     };
   },
 
   computed: {
     ...mapGetters('record', ['period', 'recordsByDay']),
+
+    items() {
+      return this.recordsByDay.slice(0, this.listIndex * 5);
+    },
   },
 
 
@@ -92,19 +102,7 @@ export default {
     },
   },
 
-  mounted() {
-    this.upgradeList(1);
-  },
-
   methods: {
-    /**
-     * Define the records on current list
-     * @param {number} index Size of the current list
-     */
-    upgradeList(index) {
-      this.items = this.recordsByDay.slice(0, index * 5);
-    },
-
     resetScroll() {
       this.$refs.scroll.resume();
     },
@@ -117,7 +115,7 @@ export default {
      */
     onLoad(index, done) {
       setTimeout(() => {
-        this.upgradeList(index);
+        this.listIndex = index;
         const stop = this.items.length === this.recordsByDay.length;
         this.showingAll = stop;
         done(stop);

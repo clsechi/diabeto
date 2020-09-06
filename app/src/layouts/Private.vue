@@ -19,7 +19,6 @@
     <q-drawer
       v-model="leftDrawerOpen"
       bordered
-      content-class="bg-grey-2"
     >
       <div class="row menu">
         <div class="col-12">
@@ -70,7 +69,7 @@
             <q-item-label>Registros</q-item-label>
           </q-item-section>
         </q-item>
-        <!-- <q-item
+        <q-item
           clickable
           :to="{ name: 'settings' }"
           exact
@@ -81,7 +80,7 @@
           <q-item-section>
             <q-item-label>Configurações</q-item-label>
           </q-item-section>
-        </q-item> -->
+        </q-item>
         <q-item
           clickable
           :to="{ name: 'about' }"

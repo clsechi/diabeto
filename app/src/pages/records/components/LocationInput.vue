@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex';
 import { getGeocoding } from 'src/services/geolocation';
 import { checkForPermission } from 'src/helpers/navigator';
 
@@ -33,7 +34,7 @@ import { checkForPermission } from 'src/helpers/navigator';
  *
  * The input is always readonly
  *
- * @emits update:location when the location is found, with a location object
+ * @emits update:record-location when the location is found, with a location object
  *
  * @typedef {Location}
  * @type {object}
@@ -47,11 +48,15 @@ export default {
   name: 'LocationInput',
 
   props: {
-    location: {
+    recordLocation: {
       type: Object,
       default: null,
     },
     readonly: {
+      type: Boolean,
+      required: true,
+    },
+    newRecord: {
       type: Boolean,
       required: true,
     },
@@ -64,19 +69,16 @@ export default {
   },
 
   computed: {
+    ...mapState('user', ['location']),
     address() {
-      return this.location ? this.location.address : '';
+      return this.recordLocation ? this.recordLocation.address : '';
     },
 
     buttonColor() {
-      if (this.location) {
-        return this.location.latitude && this.location.longitude ? 'blue-8' : 'grey';
+      if (this.recordLocation) {
+        return this.recordLocation.latitude && this.recordLocation.longitude ? 'blue-8' : 'grey';
       }
       return 'grey';
-    },
-
-    newRecord() {
-      return this.$route.name === 'new';
     },
   },
 
@@ -85,6 +87,7 @@ export default {
   },
 
   methods: {
+    ...mapMutations('user', ['setLocation']),
     /**
      * Request user current location to browser
      */
@@ -141,7 +144,7 @@ export default {
      * @param {Location} location An location object
      */
     emitData(location) {
-      this.$emit('update:location', location);
+      this.$emit('update:record-location', location);
     },
     /**
      * Shows a custom message if permission to geolocation have been denied
@@ -154,6 +157,10 @@ export default {
         this.$q.notify('Erro ao obter localização');
       }
     },
+
+    handleSavedData() {
+      this.emitData(this.location);
+    },
     /**
      * Get user current location, location address and
      * emit this data to parent component
@@ -165,11 +172,14 @@ export default {
           const { latitude, longitude } = await this.getGeolocation();
           const address = await this.getAddress(latitude, longitude);
 
-          this.emitData({
+          const location = {
             latitude,
             longitude,
             address,
-          });
+          };
+
+          this.emitData(location);
+          this.setLocation(location);
           this.$log.debug('Location updated with success');
         } catch (error) {
           this.$log.error(error);
@@ -187,8 +197,13 @@ export default {
      */
     async initialize() {
       const granted = await this.grantedPermission();
-      if (!this.readonly && this.newRecord && granted) {
-        await this.getLocation();
+      const mustGetLocation = !this.readonly && this.newRecord && granted;
+      if (mustGetLocation) {
+        if (this.location) {
+          this.handleSavedData();
+        } else {
+          this.getLocation();
+        }
       }
     },
   },

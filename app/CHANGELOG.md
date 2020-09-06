@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2020-09-06
+
+- Add dark mode option
+- Add modal to handle new records on record list
+- LocationInput read and save data from state to reduce requests to location API
+
 ## [1.1.1] - 2020-03-16
 
 - Fixed problem with wrong color of sw new version notify

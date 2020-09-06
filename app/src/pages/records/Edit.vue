@@ -1,8 +1,13 @@
 <template>
-  <q-page class="q-pb-md">
+  <q-page
+    id="edit"
+    class="q-pb-md"
+  >
     <div class="row">
       <div class="col-12 q-mt-md flex justify-center">
-        <RecordForm />
+        <RecordForm
+          @completed="redirect"
+        />
       </div>
     </div>
   </q-page>
@@ -17,5 +22,19 @@ export default {
   components: {
     RecordForm,
   },
+
+  methods: {
+    redirect() {
+      this.$router.push({ name: 'records' });
+    },
+  },
 };
 </script>
+
+<style lang="stylus">
+#edit
+  max-width 600px
+  min-width 30vw
+  @media (max-width: 600px)
+    min-width 95vw
+</style>

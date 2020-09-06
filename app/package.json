@@ -1,6 +1,6 @@
 {
   "name": "diabeto",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "A Quasar Framework app",
   "productName": "Diabeto",
   "cordovaId": "org.cordova.quasar.app",
@@ -13,25 +13,26 @@
     "deploy": "npx quasar build --mode pwa && firebase deploy --only hosting"
   },
   "dependencies": {
-    "@quasar/extras": "^1.6.0",
-    "@sentry/browser": "^5.14.2",
-    "@sentry/integrations": "^5.14.2",
+    "@quasar/extras": "^1.8.1",
+    "@sentry/browser": "^5.15.5",
+    "@sentry/integrations": "^5.15.5",
     "axios": "^0.19.2",
     "chart.js": "^2.9.3",
-    "firebase": "^7.11.0",
+    "firebase": "^7.14.5",
     "firebaseui": "^4.5.0",
     "lodash": "^4.17.15",
-    "quasar": "^1.9.10",
-    "vue-i18n": "^8.15.5",
+    "quasar": "^1.11.3",
+    "vue-i18n": "^8.17.7",
     "vuejs-logger": "^1.5.4"
   },
   "devDependencies": {
-    "@quasar/app": "^1.6.0",
+    "@quasar/app": "^1.8.10",
     "@vue/eslint-config-airbnb": "^4.0.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.8.0",
-    "eslint-loader": "^3.0.3",
-    "eslint-plugin-vue": "^6.2.2"
+    "eslint-loader": "^3.0.4",
+    "eslint-plugin-vue": "^6.2.2",
+    "jest": "^26.0.1"
   },
   "engines": {
     "node": ">= 8.9.0",

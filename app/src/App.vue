@@ -5,8 +5,14 @@
 </template>
 
 <script>
+import { setLastStatus } from 'src/helpers/darkMode';
+
 export default {
   name: 'App',
+
+  beforeMount() {
+    setLastStatus();
+  },
 };
 </script>
 

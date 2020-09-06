@@ -4,4 +4,5 @@ export default {
     max: 160,
     min: 80,
   },
+  location: null,
 };

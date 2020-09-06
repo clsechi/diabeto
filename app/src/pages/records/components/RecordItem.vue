@@ -1,94 +1,100 @@
 <template>
   <div>
-    <q-item-label
-      header
-      class="text-bold"
-    >
-      <div class="column">
-        <div class="flex justify-between items-center">
-          <div> {{ day.formatedDate }} </div>
-          <q-btn
-            icon="add"
-            dense
-            rounded
-            outline
-            size="sm"
-            color="secondary"
-            @click="newRecord(day.formatedDate)"
-          />
-        </div>
-        <div class="q-mt-md">
-          <LineChart
-            :records="day.records"
-          />
-        </div>
-      </div>
-    </q-item-label>
-    <q-slide-item
-      v-for="record in day.records"
-      :ref="`slider-${record.id}`"
-      :key="record.id"
-      left-color="blue"
-      right-color="red"
-      @left="editRecord(record.id)"
-      @right="confirmDeleteRecord(record.id)"
-    >
-      <template v-slot:left>
-        <q-icon name="edit" />
-      </template>
-      <template v-slot:right>
-        <q-icon name="delete" />
-      </template>
-      <q-item
-        v-ripple
-        clickable
-        @click="showRecord(record.id)"
+    <div>
+      <q-item-label
+        header
+        class="text-bold"
       >
-        <q-item-section class="text-bold">
-          {{ formatDate(record.time, 'HH:mm') }}
-        </q-item-section>
-        <q-item-section>
-          <ItemCircle
-            :value="record.dextro"
-            unit="mg/dL"
-            :bg-color="defineColor(record.dextro)"
-            shape="circle"
-          />
-        </q-item-section>
-        <q-item-section>
-          <ItemCircle
-            :value="record.carbs"
-            unit="g"
-            bg-color="#B1830A"
-            shape="square"
-          />
-        </q-item-section>
-        <q-item-section>
-          <ItemCircle
-            :value="record.insulin.meal.value"
-            unit="Units"
-            bg-color="#6b6fe3"
-            shape="drop"
-          />
-        </q-item-section>
-        <q-item-section>
-          <ItemCircle
-            :value="record.insulin.correction.value"
-            unit="Units"
-            bg-color="#996be3"
-            shape="drop"
-          />
-        </q-item-section>
-        <q-item-section>
-          <ItemCircle
-            :value="record.insulin.basal.value"
-            unit="Units"
-            bg-color="#37A394"
-            shape="drop-reverse"
-          />
-        </q-item-section>
-      </q-item>
-    </q-slide-item>
+        <div class="column">
+          <div class="flex justify-between items-center">
+            <div> {{ day.formatedDate }} </div>
+            <q-btn
+              icon="add"
+              dense
+              rounded
+              outline
+              size="sm"
+              color="secondary"
+              @click="newRecord(day.formatedDate)"
+            />
+          </div>
+          <div class="q-mt-md">
+            <LineChart
+              :records="day.records"
+            />
+          </div>
+        </div>
+      </q-item-label>
+      <q-slide-item
+        v-for="record in day.records"
+        :ref="`slider-${record.id}`"
+        :key="record.id"
+        left-color="blue"
+        right-color="red"
+        @left="editRecord(record.id)"
+        @right="confirmDeleteRecord(record.id)"
+      >
+        <template v-slot:left>
+          <q-icon name="edit" />
+        </template>
+        <template v-slot:right>
+          <q-icon name="delete" />
+        </template>
+        <q-item
+          v-ripple
+          clickable
+          @click="showRecord(record.id)"
+        >
+          <q-item-section class="text-bold">
+            {{ formatDate(record.time, 'HH:mm') }}
+          </q-item-section>
+          <q-item-section>
+            <ItemCircle
+              :value="record.dextro"
+              unit="mg/dL"
+              :bg-color="defineColor(record.dextro)"
+              shape="circle"
+            />
+          </q-item-section>
+          <q-item-section>
+            <ItemCircle
+              :value="record.carbs"
+              unit="g"
+              bg-color="#B1830A"
+              shape="square"
+            />
+          </q-item-section>
+          <q-item-section>
+            <ItemCircle
+              :value="record.insulin.meal.value"
+              unit="Units"
+              bg-color="#6b6fe3"
+              shape="drop"
+            />
+          </q-item-section>
+          <q-item-section>
+            <ItemCircle
+              :value="record.insulin.correction.value"
+              unit="Units"
+              bg-color="#996be3"
+              shape="drop"
+            />
+          </q-item-section>
+          <q-item-section>
+            <ItemCircle
+              :value="record.insulin.basal.value"
+              unit="Units"
+              bg-color="#37A394"
+              shape="drop-reverse"
+            />
+          </q-item-section>
+        </q-item>
+      </q-slide-item>
+    </div>
+    <NewRecordModal
+      :open.sync="openModal"
+      :date="day.formatedDate"
+    />
   </div>
 </template>
 
@@ -98,6 +104,7 @@ import { date } from 'quasar';
 
 import ItemCircle from './ItemCircle';
 import LineChart from './LineChart';
+import NewRecordModal from './NewRecordModal';
 
 const { formatDate } = date;
 
@@ -105,6 +112,7 @@ export default {
   components: {
     ItemCircle,
     LineChart,
+    NewRecordModal,
   },
 
   props: {
@@ -112,6 +120,12 @@ export default {
       required: true,
       type: Object,
     },
+  },
+
+  data() {
+    return {
+      openModal: false,
+    };
   },
 
   computed: {
@@ -149,8 +163,9 @@ export default {
       });
     },
 
-    newRecord(formatedDate) {
-      this.$router.push({ name: 'new', query: { date: formatedDate } });
+    newRecord() {
+      this.openModal = true;
+      // this.$router.push({ name: 'new', query: { date: formatedDate } });
     },
 
     editRecord(id) {
