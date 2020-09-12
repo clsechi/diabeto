@@ -166,6 +166,22 @@ module.exports = function (ctx) {
             "type": "image/png"
           }
         ],
+        "shortcuts": [
+          {
+            "name": "Criar novo",
+            "short_name": "Criar",
+            "description": "Criar novo registo de log",
+            "url": "/records/new?utm_source=homescreen",
+            "icons": [{ "src": "statics/icons/shortcuts/add-192x192.png", "sizes": "192x192" }]
+          },
+          {
+            "name": "Registros",
+            "short_name": "Registros",
+            "description": "Listar todos os regsitros",
+            "url": "/records?utm_source=homescreen",
+            "icons": [{ "src": "statics/icons/shortcuts/list-192x192.png", "sizes": "192x192" }]
+          },
+        ]
       }
     },
 
