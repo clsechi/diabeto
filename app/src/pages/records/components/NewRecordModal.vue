@@ -8,7 +8,7 @@
       id="new-record-modal"
       class="row bg-white q-pa-md"
     >
-      <div class="col-12 ">
+      <div class="col-12">
         <q-btn
           class="float-right q-mr-sm q-mb-sm"
           round
@@ -22,6 +22,7 @@
       </div>
       <div class="col-12">
         <RecordForm
+          :id="id"
           :fixed-date="date"
           @completed="close"
         />
@@ -50,11 +51,17 @@ export default {
       required: false,
       default: null,
     },
+    id: {
+      type: String,
+      required: false,
+      default: null,
+    },
   },
 
   methods: {
     close() {
       this.$emit('update:open', false);
+      this.$emit('update:id', null);
     },
   },
 };

@@ -130,6 +130,19 @@
         label="Anotações"
         :readonly="readonly"
       />
+      <div class="q-pa-md">
+        <q-btn-toggle
+          v-model="form.type"
+          no-caps
+          clearable
+          dense
+          color="grey-4"
+          text-color="black"
+          toggle-color="primary"
+          :options="typeOptions"
+          :readonly="readonly"
+        />
+      </div>
       <div
         v-if="!readonly"
         class="flex items-center justify-around q-mt-lg"
@@ -183,6 +196,15 @@ export default {
       loading: false,
       commonValues: [4, 8, 10, 24],
       form: {},
+      typeOptions: [
+        { label: 'Café da manhâ', value: 'breakfast' },
+        { label: 'Após café', value: 'after_breakfast' },
+        { label: 'Almoço', value: 'lunch' },
+        { label: 'Após almoço', value: 'after_lunch' },
+        { label: 'Jantar', value: 'dinner' },
+        { label: 'Após jantar', value: 'after_dinner' },
+        { label: 'Antes de deitar', value: 'before_sleep' },
+      ],
     };
   },
 

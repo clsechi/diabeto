@@ -7,7 +7,7 @@
       >
         <div class="column">
           <div class="flex justify-between items-center">
-            <div> {{ day.formatedDate }} </div>
+            <div> {{ formatDate(day.time, 'dddd, DD/MM/YY') }} </div>
             <q-btn
               icon="add"
               dense
@@ -88,10 +88,21 @@
               shape="drop-reverse"
             />
           </q-item-section>
+          <q-item-section>
+            <q-icon
+              class="bg-green"
+              v-if="record.type"
+              name="check"
+              size="md"
+              color="white"
+              title="Type added"
+            />
+          </q-item-section>
         </q-item>
       </q-slide-item>
     </div>
     <NewRecordModal
+      :id.sync="selectedRecordId"
       :open.sync="openModal"
       :date="day.formatedDate"
     />
@@ -125,6 +136,7 @@ export default {
   data() {
     return {
       openModal: false,
+      selectedRecordId: null,
     };
   },
 
@@ -169,10 +181,14 @@ export default {
     },
 
     editRecord(id) {
-      this.$router.push({ name: 'edit', params: { id } });
+      this.selectedRecordId = id;
+      this.openModal = true;
+      // this.$router.push({ name: 'edit', params: { id } });
     },
 
     showRecord(id) {
+      // this.selectedRecordId = id;
+      // this.openModal = true;
       this.$router.push({ name: 'show', params: { id } });
     },
   },

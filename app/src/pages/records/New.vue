@@ -6,6 +6,7 @@
     <div class="row">
       <div class="col-12 q-mt-md flex justify-center">
         <RecordForm
+          class="form"
           @completed="redirect"
         />
       </div>
@@ -33,8 +34,9 @@ export default {
 
 <style lang="stylus">
 #new
-  max-width 600px
-  min-width 30vw
-  @media (max-width: 600px)
-    min-width 95vw
+  .form
+    max-width 600px
+    min-width 30vw
+    @media (max-width: 600px)
+      min-width 95vw
 </style>
