@@ -11,7 +11,7 @@
     "lint:fix": "eslint --ext .js,.vue src --fix",
     "test": "echo \"No test specified\" && exit 0",
     "deploy": "npx quasar build --mode pwa && firebase deploy --only hosting",
-    "build:pwa": "npx quasar build -m pwa"
+    "build": "npx quasar build -m pwa -d"
   },
   "dependencies": {
     "@quasar/extras": "^1.9.10",
