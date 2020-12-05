@@ -57,11 +57,14 @@ export default {
       required: false,
       default: null,
     },
+<<<<<<< HEAD
     readonly: {
       type: Boolean,
       required: false,
       default: false,
     },
+=======
+>>>>>>> e425a2c030401921df2e8423de6338dd95d5e18f
   },
 
   methods: {

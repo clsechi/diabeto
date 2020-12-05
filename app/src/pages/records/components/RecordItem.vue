@@ -90,6 +90,16 @@
               shape="drop-reverse"
             />
           </q-item-section>
+          <q-item-section>
+            <q-icon
+              class="bg-green"
+              v-if="record.type"
+              name="check"
+              size="md"
+              color="white"
+              title="Type added"
+            />
+          </q-item-section>
         </q-item>
       </q-slide-item>
     </div>
