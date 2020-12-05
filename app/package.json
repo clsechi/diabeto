@@ -10,7 +10,8 @@
     "lint": "eslint --ext .js,.vue src",
     "lint:fix": "eslint --ext .js,.vue src --fix",
     "test": "echo \"No test specified\" && exit 0",
-    "deploy": "npx quasar build --mode pwa && firebase deploy --only hosting"
+    "deploy": "npx quasar build --mode pwa && firebase deploy --only hosting",
+    "build:pwa": "npx quasar build -m pwa"
   },
   "dependencies": {
     "@quasar/extras": "^1.9.10",
@@ -33,7 +34,8 @@
     "eslint-loader": "^3.0.4",
     "eslint-plugin-vue": "^6.2.2",
     "jest": "^26.6.1",
-    "webpack-bundle-analyzer": "^3.9.0"
+    "webpack-bundle-analyzer": "^3.9.0",
+    "webpack-cli": "^4.1.0"
   },
   "engines": {
     "node": ">= 8.9.0",
