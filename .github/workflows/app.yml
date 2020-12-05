@@ -1,4 +1,4 @@
-name: CI
+name: app
 
 on: [push]
 
@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Build App
+      - name: Build
         run: |
           cd app
           npm ci
