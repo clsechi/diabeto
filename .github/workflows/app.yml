@@ -2,13 +2,25 @@ name: app
 
 on: [push]
 
+defaults:
+  run:
+    shell: bash
+    working-directory: app
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Build
-        run: |
-          cd app
-          npm ci
-          npm run build
+      - name: Install dependencies
+        run: npm ci
+      - name: Build app
+        run: npm run build
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint app
+        run: npm run lint
