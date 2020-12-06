@@ -1,8 +1,29 @@
 const functions = require('firebase-functions');
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors')({ origin: true });
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
+const createReport = require('./controllers/reports/createReport');
+const authentication = require('./services/authenticationService');
+
+const app = express();
+
+app.use(cors);
+
+app.use(bodyParser.json());
+
+app.get('/status', (req, res) => res.sendStatus(200));
+
+// TODO add authentication
+app.post('/reports', createReport);
+
+app.use((err, req, res, next) => {
+  if (res.headersSent) {
+    return next(err);
+  }
+  console.log(err); /* eslint-disable-line no-console */
+  return res.status(500).send('Something is broken');
+});
+
+
+exports.app = functions.https.onRequest(app);

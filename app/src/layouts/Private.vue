@@ -71,6 +71,18 @@
         </q-item>
         <q-item
           clickable
+          :to="{ name: 'reports' }"
+          exact
+        >
+          <q-item-section avatar>
+            <q-icon name="receipt_long" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Relatórios</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item
+          clickable
           :to="{ name: 'settings' }"
           exact
         >

@@ -7,7 +7,9 @@
       >
         <div class="column">
           <div class="flex justify-between items-center">
-            <div> {{ day.formatedDate }} </div>
+            <div>
+              {{ dayDateFormatted }}
+            </div>
             <q-btn
               icon="add"
               dense
@@ -88,12 +90,25 @@
               shape="drop-reverse"
             />
           </q-item-section>
+          <q-item-section>
+            <q-icon
+              v-if="record.type"
+              class="bg-green"
+              name="check"
+              size="md"
+              color="white"
+              title="Type added"
+            />
+          </q-item-section>
         </q-item>
       </q-slide-item>
     </div>
     <NewRecordModal
+      :id.sync="selectedRecordId"
       :open.sync="openModal"
       :date="day.formatedDate"
+      :readonly="displayingRecord"
+      @update:open="resetModal"
     />
   </div>
 </template>
@@ -125,11 +140,17 @@ export default {
   data() {
     return {
       openModal: false,
+      selectedRecordId: null,
+      displayingRecord: false,
     };
   },
 
   computed: {
     ...mapGetters('user', ['maxTarget', 'minTarget']),
+
+    dayDateFormatted() {
+      return formatDate(this.day.time, 'dddd, DD/MM/YY');
+    },
   },
 
   methods: {
@@ -138,6 +159,12 @@ export default {
     ]),
 
     formatDate,
+
+    resetModal() {
+      this.selectedRecordId = null;
+      this.displayingRecord = false;
+    },
+
 
     defineColor(val) {
       if (val >= this.maxTarget || val <= this.minTarget) return '#ED7F5A';
@@ -165,15 +192,17 @@ export default {
 
     newRecord() {
       this.openModal = true;
-      // this.$router.push({ name: 'new', query: { date: formatedDate } });
     },
 
     editRecord(id) {
-      this.$router.push({ name: 'edit', params: { id } });
+      this.selectedRecordId = id;
+      this.openModal = true;
     },
 
     showRecord(id) {
-      this.$router.push({ name: 'show', params: { id } });
+      this.selectedRecordId = id;
+      this.displayingRecord = true;
+      this.openModal = true;
     },
   },
 };

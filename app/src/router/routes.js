@@ -3,12 +3,12 @@
  *
  * @property {object} meta Define the meta data of a specific routes and children
  *
- * @property {booelan} auth  define if routes need a logged user
+ * @property {booelan} meta.auth  define if routes need a logged user
  *
- * @property {object} toolbar define the toolbar behavior on the current route
- * @property {title} title Define the title displayed on toolbar
- * @property {title} button Define if the button represents a menu or
- * back button, each one have a specfic action
+ * @property {object} meta.toolbar define the toolbar behavior on the current route
+ * @property {title}  meta.toolbar.title Define the title displayed on toolbar
+ * @property {title}  meta.toolbar.button Define if the toolbar button represents a menu or
+ * a back button, each one have a specfic action
  */
 const routes = [
   {
@@ -83,6 +83,17 @@ const routes = [
             },
           },
         ],
+      },
+      {
+        path: 'reports',
+        component: () => import('pages/reports/Index.vue'),
+        name: 'reports',
+        meta: {
+          toolbar: {
+            title: 'Relatórios',
+            button: 'menu',
+          },
+        },
       },
       {
         path: 'settings',
