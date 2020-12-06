@@ -130,6 +130,19 @@
         label="Anotações"
         :readonly="readonly"
       />
+      <div class="q-pa-md">
+        <q-btn-toggle
+          v-model="form.type"
+          no-caps
+          clearable
+          color="grey-4"
+          text-color="black"
+          toggle-color="primary"
+          :options="typeOptions"
+          :readonly="readonly"
+          :disable="readonly"
+        />
+      </div>
       <div
         v-if="!readonly"
         class="flex items-center justify-around q-mt-lg"
@@ -176,6 +189,11 @@ export default {
       required: false,
       default: null,
     },
+    forceReadonly: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
 
   data() {
@@ -183,6 +201,15 @@ export default {
       loading: false,
       commonValues: [4, 8, 10, 24],
       form: {},
+      typeOptions: [
+        { label: 'Café da manhâ', value: 'breakfast' },
+        { label: 'Após café', value: 'after_breakfast' },
+        { label: 'Almoço', value: 'lunch' },
+        { label: 'Após almoço', value: 'after_lunch' },
+        { label: 'Jantar', value: 'dinner' },
+        { label: 'Após jantar', value: 'after_dinner' },
+        { label: 'Antes de deitar', value: 'before_sleep' },
+      ],
     };
   },
 
@@ -190,7 +217,7 @@ export default {
     ...mapGetters('record', ['records']),
 
     readonly() {
-      return this.$route.name === 'show';
+      return this.forceReadonly || this.$route.name === 'show';
     },
 
     recordId() {
