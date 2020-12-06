@@ -92,8 +92,8 @@
           </q-item-section>
           <q-item-section>
             <q-icon
-              class="bg-green"
               v-if="record.type"
+              class="bg-green"
               name="check"
               size="md"
               color="white"
