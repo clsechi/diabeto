@@ -8,6 +8,8 @@
 
 <script>
 import Chart from 'chart.js';
+import ChartAnnotation from 'chartjs-plugin-annotation';
+import targetsAsAnnotation from 'src/helpers/chart/targetsAsAnnotation';
 import { date, uid } from 'quasar';
 
 const { formatDate } = date;
@@ -68,6 +70,7 @@ export default {
           fill: false,
           borderWidth: 0,
         },
+        plugins: [ChartAnnotation],
         options: {
           responsive: true,
           legend: {
@@ -92,6 +95,9 @@ export default {
                 autoSkip: false,
               },
             }],
+          },
+          annotation: {
+            annotations: [...targetsAsAnnotation],
           },
         },
       };
