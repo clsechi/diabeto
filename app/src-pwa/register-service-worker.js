@@ -32,12 +32,13 @@ register(process.env.SERVICE_WORKER_FILE, {
     });
 
     Notify.create({
-      message: 'Nova versão disponível',
+      message: 'Nova atualização disponível',
       timeout: 30000,
       color: 'primary',
       actions: [
         {
           label: 'Atualizar',
+          color: 'white',
           handler: () => registration.waiting.postMessage('skipWaiting'),
         },
         {
