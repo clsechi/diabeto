@@ -56,6 +56,42 @@
               />
             </q-item-section>
           </q-item>
+          <q-separator />
+          <q-item-label
+            header
+          >
+            Objetivos
+          </q-item-label>
+          <q-item
+            tag="label"
+          >
+            <q-item-section avatar>
+              <q-icon name="keyboard_arrow_down" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Glicemia Máxima</q-item-label>
+            </q-item-section>
+            <q-item-section
+              side
+            >
+              {{ maxTarget }}
+            </q-item-section>
+          </q-item>
+          <q-item
+            tag="label"
+          >
+            <q-item-section avatar>
+              <q-icon name="keyboard_arrow_up" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Glicemia Mínima</q-item-label>
+            </q-item-section>
+            <q-item-section
+              side
+            >
+              {{ minTarget }}
+            </q-item-section>
+          </q-item>
         </q-list>
       </div>
     </div>
@@ -63,6 +99,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import { setActiveStatus } from 'src/helpers/darkMode';
 
 export default {
@@ -75,6 +112,11 @@ export default {
   },
 
   computed: {
+    ...mapGetters('user', [
+      'maxTarget',
+      'minTarget',
+    ]),
+
     darkModeActive() {
       return this.$q.dark.isActive;
     },

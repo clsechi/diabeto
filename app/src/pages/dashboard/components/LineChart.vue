@@ -1,13 +1,13 @@
 <template>
   <div>
-    <canvas
-      :id="chartId"
-    />
+    <canvas :id="chartId" />
   </div>
 </template>
 
 <script>
 import Chart from 'chart.js';
+import ChartAnnotation from 'chartjs-plugin-annotation';
+import targetsAsAnnotation from 'src/helpers/chart/targetsAsAnnotation';
 import { date, uid } from 'quasar';
 
 const { formatDate } = date;
@@ -55,8 +55,7 @@ export default {
 
   methods: {
     chartData() {
-      return this.records
-        .map(record => record[this.id].average);
+      return this.records.map(record => record[this.id].average);
     },
 
     chartLabels() {
@@ -75,6 +74,7 @@ export default {
           fill: false,
           borderWidth: 0,
         },
+        plugins: [ChartAnnotation],
         options: {
           legend: {
             display: false,
@@ -99,6 +99,9 @@ export default {
               },
             }],
           },
+          annotation: {
+            annotations: [...targetsAsAnnotation],
+          },
         },
       };
     },
@@ -119,6 +122,6 @@ export default {
 
 <style lang="stylus">
 #myChart
-  width: 100%
-  height: 250px
+  width: 100%;
+  height: 250px;
 </style>

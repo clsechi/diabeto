@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.0] - 2020-12-07
+
+- Add target to charts
+
 ## [1.3.0] - 2020-09-06
 
 - Add edit and show mode as modal
