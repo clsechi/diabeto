@@ -14,7 +14,7 @@
           </a>
         </p>
         <div class="flex flex-center">
-          <img class="logo" src="statics/logo.png" />
+          <img class="logo" src="logo.png" />
         </div>
         <div>
           <div class="text-subtitle1 text-center q-px-md text-bold">

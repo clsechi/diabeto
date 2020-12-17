@@ -1,0 +1,12 @@
+{
+  "name": "diabeto",
+  "description": "Diabeto",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/clsechi/diabeto.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/clsechi/diabeto/issues"
+  }
+}

@@ -6,9 +6,7 @@ workbox.core.setCacheNameDetails({ prefix: 'diabeto' });
 
 workbox.googleAnalytics.initialize();
 
-self.__precacheManifest = [].concat(self.__precacheManifest || []);
-
-workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
+workbox.precaching.precacheAndRoute(self.__WB_MANIFEST);
 
 addEventListener('message', (messageEvent) => {
   if (messageEvent.data === 'skipWaiting') return skipWaiting();

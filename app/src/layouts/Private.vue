@@ -31,7 +31,7 @@
           >
             <template v-slot:error>
               <img
-                src="statics/logo.png"
+                src="logo.png"
                 width="50"
                 style="background-color: white"
               >

@@ -2,7 +2,7 @@
   <q-page padding>
     <div class="text-center">
       <img
-        src="statics/logo.png"
+        src="logo.png"
         alt="logo diabeto"
       >
       <p>v{{ version }}</p>
