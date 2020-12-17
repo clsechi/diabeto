@@ -57,7 +57,9 @@ export default {
     },
 
     chartLabels() {
-      return this.records.map(record => formatDate(record.time, 'HH:mm'));
+      return this.records
+        .map(record => formatDate(record.time, 'HH:mm'))
+        .reverse();
     },
 
     chartConfig() {
