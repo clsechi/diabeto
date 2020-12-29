@@ -1,14 +1,17 @@
-/* global workbox */
 /* eslint-env serviceworker */
 /* eslint-disable no-underscore-dangle, no-restricted-globals */
 
-workbox.core.setCacheNameDetails({ prefix: 'diabeto' });
+import { setCacheNameDetails } from 'workbox-core';
+import { precacheAndRoute } from 'workbox-precaching';
 
-workbox.googleAnalytics.initialize();
-
-workbox.precaching.precacheAndRoute(self.__WB_MANIFEST);
-
-addEventListener('message', (messageEvent) => {
-  if (messageEvent.data === 'skipWaiting') return skipWaiting();
+/**
+ * Add listener to handle user manual SW update choice
+ */
+self.addEventListener('message', (event) => {
+  if (event.data === 'SKIP_WAITING') return self.skipWaiting();
   return null;
 });
+
+setCacheNameDetails({ prefix: 'diabeto' });
+
+precacheAndRoute(self.__WB_MANIFEST);
