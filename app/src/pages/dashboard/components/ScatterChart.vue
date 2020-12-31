@@ -64,7 +64,8 @@ export default {
         data: {
           datasets: [{
             label: 'Scatter Dataset',
-            pointBackgroundColor: 'rgba(0, 0, 0, 1)',
+            backgroundColor: 'rgb(48, 48, 47)',
+            pointBackgroundColor: 'rgb(255, 255, 255)',
             data: this.chartData(),
           }],
           fill: false,

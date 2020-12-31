@@ -35,14 +35,6 @@ module.exports = function (ctx) {
       // iconSet: 'ionicons-v4',
       // lang: 'de', // Quasar language
 
-      // Possible values for "all":
-      // * 'auto' - Auto-import needed Quasar components & directives
-      //            (slightly higher compile time; next to minimum bundle size; most convenient)
-      // * false  - Manually specify what to import
-      //            (fastest compile time; minimum bundle size; most tedious)
-      // * true   - Import everything from Quasar
-      //            (not treeshaking Quasar; biggest bundle size; convenient)
-
       importStrategy: 'auto',
 
       directives: [
@@ -63,6 +55,8 @@ module.exports = function (ctx) {
           textColor: 'white',
           actions: [{ icon: 'close', color: 'white' }],
         },
+
+        dark: true,
       },
 
       lang: 'pt-br',
