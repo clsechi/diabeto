@@ -70,6 +70,7 @@ export default {
           datasets: [{
             data: this.chartData(),
             borderColor: 'rgba(255, 99, 132, 1)',
+            backgroundColor: 'white',
           }],
           fill: false,
           borderWidth: 0,
@@ -91,11 +92,19 @@ export default {
               ticks: {
                 beginAtZero: true,
                 stepSize: 50,
+                fontColor: 'white',
+              },
+              gridLines: {
+                color: 'rgba(255, 255, 255, 0.3)',
+                zeroLineColor: 'rgba(255, 255, 255, 0.3)',
               },
             }],
             xAxes: [{
               gridLines: {
                 display: false,
+              },
+              ticks: {
+                fontColor: 'white',
               },
             }],
           },

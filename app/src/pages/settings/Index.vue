@@ -15,23 +15,6 @@
           >
             Geral
           </q-item-label>
-          <q-item
-            v-ripple
-            tag="label"
-          >
-            <q-item-section>
-              <q-item-label>Dark Mode</q-item-label>
-            </q-item-section>
-            <q-item-section
-              side
-              top
-            >
-              <q-toggle
-                :value="darkModeActive"
-                @input="changeDarkMode"
-              />
-            </q-item-section>
-          </q-item>
           <q-separator />
           <q-item-label
             header
@@ -100,7 +83,6 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { setActiveStatus } from 'src/helpers/darkMode';
 
 export default {
   name: 'SettingsIndex',
@@ -116,16 +98,6 @@ export default {
       'maxTarget',
       'minTarget',
     ]),
-
-    darkModeActive() {
-      return this.$q.dark.isActive;
-    },
-  },
-
-  methods: {
-    changeDarkMode(val) {
-      setActiveStatus(val);
-    },
   },
 };
 </script>

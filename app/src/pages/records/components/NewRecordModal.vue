@@ -6,7 +6,7 @@
   >
     <div
       id="new-record-modal"
-      class="row bg-white q-pa-md"
+      class="row q-pa-md bg-black"
     >
       <div class="col-12">
         <q-btn
