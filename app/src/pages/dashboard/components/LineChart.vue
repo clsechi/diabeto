@@ -5,8 +5,7 @@
 </template>
 
 <script>
-import ChartAnnotation from 'chartjs-plugin-annotation';
-import targetsAsAnnotation from 'src/helpers/chart/targetsAsAnnotation';
+import addAnnotations from 'src/helpers/chart/annotations';
 import ChartMixin from 'src/mixins/chart';
 import { date } from 'quasar';
 
@@ -51,7 +50,7 @@ export default {
     },
 
     chartConfig() {
-      return {
+      return addAnnotations({
         type: 'line',
         data: {
           labels: this.chartLabels(),
@@ -62,7 +61,6 @@ export default {
           fill: false,
           borderWidth: 0,
         },
-        plugins: [ChartAnnotation],
         options: {
           legend: {
             display: false,
@@ -87,11 +85,8 @@ export default {
               },
             }],
           },
-          annotation: {
-            annotations: targetsAsAnnotation(),
-          },
         },
-      };
+      });
     },
   },
 };

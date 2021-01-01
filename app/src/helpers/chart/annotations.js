@@ -1,4 +1,5 @@
 import store from 'src/store';
+import ChartAnnotation from 'chartjs-plugin-annotation';
 
 const maxTarget = () => store.getters['user/maxTarget'];
 const minTarget = () => store.getters['user/minTarget'];
@@ -25,4 +26,23 @@ const targets = () => [{
   borderWidth: 2,
 }];
 
-export default targets;
+const addAnnotations = (object) => {
+  const plugins = [ChartAnnotation];
+
+  const annotation = {
+    annotations: targets(),
+  };
+
+  const options = {
+    ...object.options,
+    annotation,
+  };
+
+  return ({
+    ...object,
+    plugins,
+    options,
+  });
+};
+
+export default addAnnotations;

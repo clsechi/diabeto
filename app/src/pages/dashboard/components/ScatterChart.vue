@@ -7,9 +7,8 @@
 </template>
 
 <script>
+import addAnnotations from 'src/helpers/chart/annotations';
 import ChartMixin from 'src/mixins/chart';
-import ChartAnnotation from 'chartjs-plugin-annotation';
-import targetsAsAnnotation from 'src/helpers/chart/targetsAsAnnotation';
 import { date } from 'quasar';
 
 const { formatDate } = date;
@@ -51,7 +50,7 @@ export default {
     },
 
     chartConfig() {
-      return {
+      return addAnnotations({
         type: 'scatter',
         data: {
           datasets: [{
@@ -61,7 +60,6 @@ export default {
           fill: false,
           borderWidth: 0,
         },
-        plugins: [ChartAnnotation],
         options: {
           responsive: true,
           legend: {
@@ -86,11 +84,8 @@ export default {
               },
             }],
           },
-          annotation: {
-            annotations: targetsAsAnnotation(),
-          },
         },
-      };
+      });
     },
   },
 };
