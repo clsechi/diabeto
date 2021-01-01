@@ -7,15 +7,19 @@
 </template>
 
 <script>
-import Chart from 'chart.js';
+import ChartMixin from 'src/mixins/chart';
 import ChartAnnotation from 'chartjs-plugin-annotation';
 import targetsAsAnnotation from 'src/helpers/chart/targetsAsAnnotation';
-import { date, uid } from 'quasar';
+import { date } from 'quasar';
 
 const { formatDate } = date;
 
 export default {
   name: 'ScatterChart',
+
+  mixins: [
+    ChartMixin,
+  ],
 
   props: {
     id: {
@@ -28,26 +32,10 @@ export default {
     },
   },
 
-  data() {
-    return {
-      chart: null,
-    };
-  },
-
-  computed: {
-    chartId() {
-      return `scatter-chart-${uid()}`;
-    },
-  },
-
   watch: {
-    records() {
-      this.updateChart();
+    records(newData, oldData) {
+      this.updateChart(newData, oldData);
     },
-  },
-
-  mounted() {
-    this.drawChart();
   },
 
   methods: {
@@ -58,12 +46,15 @@ export default {
       }));
     },
 
+    chartLabels() {
+      return [];
+    },
+
     chartConfig() {
       return {
         type: 'scatter',
         data: {
           datasets: [{
-            label: 'Scatter Dataset',
             pointBackgroundColor: 'rgba(0, 0, 0, 1)',
             data: this.chartData(),
           }],
@@ -76,7 +67,7 @@ export default {
           legend: {
             display: false,
           },
-          // maintainAspectRatio: false,
+          maintainAspectRatio: true,
           elements: {
             line: {
               fill: false,
@@ -92,26 +83,14 @@ export default {
             xAxes: [{
               ticks: {
                 stepSize: 2,
-                autoSkip: false,
               },
             }],
           },
           annotation: {
-            annotations: [...targetsAsAnnotation],
+            annotations: targetsAsAnnotation(),
           },
         },
       };
-    },
-
-    updateChart() {
-      this.chart.data.datasets[0].data = this.chartData();
-      this.chart.update();
-    },
-
-
-    drawChart() {
-      const ctx = document.getElementById(this.chartId).getContext('2d');
-      this.chart = new Chart(ctx, this.chartConfig());
     },
   },
 };

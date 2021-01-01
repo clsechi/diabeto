@@ -5,15 +5,19 @@
 </template>
 
 <script>
-import Chart from 'chart.js';
 import ChartAnnotation from 'chartjs-plugin-annotation';
 import targetsAsAnnotation from 'src/helpers/chart/targetsAsAnnotation';
-import { date, uid } from 'quasar';
+import ChartMixin from 'src/mixins/chart';
+import { date } from 'quasar';
 
 const { formatDate } = date;
 
 export default {
   name: 'LineChart',
+
+  mixins: [
+    ChartMixin,
+  ],
 
   props: {
     id: {
@@ -31,26 +35,10 @@ export default {
     },
   },
 
-  data() {
-    return {
-      chart: null,
-    };
-  },
-
-  computed: {
-    chartId() {
-      return `line-chart-${uid()}`;
-    },
-  },
-
   watch: {
-    records() {
-      this.updateChart();
+    records(newData, oldData) {
+      this.updateChart(newData, oldData);
     },
-  },
-
-  mounted() {
-    this.drawChart();
   },
 
   methods: {
@@ -79,7 +67,7 @@ export default {
           legend: {
             display: false,
           },
-          // maintainAspectRatio: false,
+          maintainAspectRatio: true,
           elements: {
             line: {
               fill: false,
@@ -100,21 +88,10 @@ export default {
             }],
           },
           annotation: {
-            annotations: [...targetsAsAnnotation],
+            annotations: targetsAsAnnotation(),
           },
         },
       };
-    },
-
-    updateChart() {
-      this.chart.data.labels = this.chartLabels();
-      this.chart.data.datasets[0].data = this.chartData();
-      this.chart.update();
-    },
-
-    drawChart() {
-      const ctx = document.getElementById(this.chartId).getContext('2d');
-      this.chart = new Chart(ctx, this.chartConfig());
     },
   },
 };

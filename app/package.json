@@ -7,6 +7,7 @@
   "author": "Carlos Sechi <carlossechi@hotmail.com.br>",
   "private": true,
   "scripts": {
+    "dev": "npx quasar dev",
     "lint": "eslint --ext .js,.vue src",
     "lint:fix": "eslint --ext .js,.vue src --fix",
     "test": "echo \"No test specified\" && exit 0",

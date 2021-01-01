@@ -3,7 +3,7 @@ import store from 'src/store';
 const maxTarget = () => store.getters['user/maxTarget'];
 const minTarget = () => store.getters['user/minTarget'];
 
-const targets = [{
+const targets = () => [{
   type: 'line',
   drawTime: 'afterDatasetsDraw',
   display: true,
@@ -24,4 +24,5 @@ const targets = [{
   borderColor: 'orange',
   borderWidth: 2,
 }];
+
 export default targets;
