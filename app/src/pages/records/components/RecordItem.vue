@@ -92,7 +92,7 @@
         </q-item>
       </q-slide-item>
     </div>
-    <NewRecordModal
+    <RecordModal
       :id.sync="selectedRecordId"
       :open.sync="openModal"
       :date="day.formatedDate"
@@ -108,7 +108,7 @@ import { date } from 'quasar';
 
 import ItemCircle from './ItemCircle';
 import LineChart from './LineChart';
-import NewRecordModal from './NewRecordModal';
+import RecordModal from './RecordModal';
 
 const { formatDate } = date;
 
@@ -116,7 +116,7 @@ export default {
   components: {
     ItemCircle,
     LineChart,
-    NewRecordModal,
+    RecordModal,
   },
 
   props: {

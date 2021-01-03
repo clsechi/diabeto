@@ -61,19 +61,19 @@
         </q-page-sticky>
       </q-page>
     </transition>
-    <NewRecordModal :open.sync="openModal" />
+    <RecordModal :open.sync="openModal" />
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import RecordItem from './components/RecordItem';
-import NewRecordModal from './components/NewRecordModal';
+import RecordModal from './components/RecordModal';
 
 export default {
   components: {
     RecordItem,
-    NewRecordModal,
+    RecordModal,
   },
 
   data() {

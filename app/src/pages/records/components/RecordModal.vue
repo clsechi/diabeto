@@ -36,7 +36,7 @@
 import RecordForm from './RecordForm';
 
 export default {
-  name: 'NewRecordModal',
+  name: 'RecordModal',
 
   components: {
     RecordForm,
