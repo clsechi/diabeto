@@ -138,7 +138,7 @@ export default {
       return this.$firebase.auth().currentUser.email;
     },
     photoURL() {
-      return this.$firebase.auth().currentUser.photoURL;
+      return this.$firebase.auth().currentUser.photoURL || this.generateAvatar();
     },
     toolbarTitle() {
       return this.$route.meta.toolbar.title;
@@ -148,9 +148,16 @@ export default {
     },
   },
   methods: {
-    signOut() {
-      this.$firebase.auth().signOut();
-      this.$router.push({ name: 'login' });
+    async signOut() {
+      try {
+        await this.$firebase.auth().signOut();
+        this.$router.push({ name: 'login' });
+      } catch (err) {
+        this.$log.error(err);
+      }
+    },
+    generateAvatar() {
+      return `https://robohash.org/${this.email}?bgset=bg1`;
     },
   },
 };
@@ -158,7 +165,7 @@ export default {
 
 <style lang="stylus" scoped>
 .menu
-  background-image url('https://picsum.photos/300/200.webp')
+  background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
   padding: 15px;
 .avatar
   border-radius: 50%

@@ -59,7 +59,7 @@ module.exports = function (ctx) {
         notify: {
           position: 'bottom',
           color: 'negative',
-          timeout: 1500,
+          timeout: 2500,
           textColor: 'white',
           actions: [{ icon: 'close', color: 'white' }],
         },

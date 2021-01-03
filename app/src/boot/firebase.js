@@ -1,8 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
-// import 'firebase/performance';
-import * as firebaseui from 'firebaseui';
 
 const config = {
   apiKey: 'AIzaSyD1r1fFj1QGFcfu0jahdNr8vp5sZywHZIk',
@@ -20,18 +18,12 @@ firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
 // firebase.firestore.setLogLevel('debug');
 
-// firebase.firestore().enablePersistence();
 // need use realtime listerners to proper work
+// firebase.firestore().enablePersistence();
 
 const DB = firebase.firestore();
 
-// const PERF = firebase.performance();
-
-const AUTH_UI = new firebaseui.auth.AuthUI(firebase.auth());
-
 export default ({ Vue }) => {
-  Vue.prototype.$authUI = AUTH_UI;
   Vue.prototype.$firebase = firebase;
   Vue.prototype.$firestore = DB;
-  // Vue.prototype.$perf = PERF;
 };
