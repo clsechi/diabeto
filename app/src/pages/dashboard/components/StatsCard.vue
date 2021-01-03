@@ -1,6 +1,6 @@
 <template>
   <q-card
-    class="q-ma-xs"
+    class="q-ma-xs bg-grey-3"
   >
     <q-card-section>
       <div class="text-grey-7">
