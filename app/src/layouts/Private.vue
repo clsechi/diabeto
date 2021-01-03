@@ -19,6 +19,7 @@
     <q-drawer
       v-model="leftDrawerOpen"
       bordered
+      content-class="bg-grey-3 shadow-1"
     >
       <div class="row menu">
         <div class="col-12">

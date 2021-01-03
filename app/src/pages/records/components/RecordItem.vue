@@ -29,6 +29,7 @@
         v-for="record in day.records"
         :ref="`slider-${record.id}`"
         :key="record.id"
+        class="bg-grey-3"
         left-color="blue"
         right-color="red"
         @left="editRecord(record.id)"
