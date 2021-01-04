@@ -8,7 +8,7 @@
         <div class="flex justify-center">
           <img
             class="logo"
-            alt="Diabeto logo"
+            title="Diabeto logo"
             src="logo.png"
           >
         </div>
@@ -25,11 +25,13 @@
             <div class="q-my-sm">
               <q-input
                 v-model="form.email"
+                tabindex="1"
                 filled
                 autofocus
                 clearable
                 lazy-rules
                 type="text"
+                title="Email"
                 label="Email"
                 error-message="Campo obrigatório"
                 autocomplete="email"
@@ -41,9 +43,11 @@
             <div class="q-my-sm">
               <q-input
                 v-model="form.password"
+                tabindex="2"
                 filled
                 clearable
                 lazy-rules
+                title="Senha"
                 label="Senha"
                 error-message="Campo obrigatório"
                 :error="$v.form.password.$error"
@@ -60,9 +64,12 @@
                 </template>
               </q-input>
             </div>
-            <div class="flex justify-center q-mb-md">
+            <div class="flex justify-end q-mb-lg">
               <q-btn
+                class="full-width"
                 label="Login"
+                title="Login"
+                tabindex="3"
                 color="primary"
                 size="md"
                 :loading="loading"
