@@ -135,11 +135,14 @@ export default {
       if (this.$v.$invalid) return this.$q.notify('Por favor, reveja os campos');
 
       try {
+        this.loading = true;
         const { email, password } = this.form;
         await this.$firebase.auth().signInWithEmailAndPassword(email, password);
       } catch (err) {
         this.$log.error(err);
         this.handleErrors(err);
+      } finally {
+        this.loading = false;
       }
     },
 
