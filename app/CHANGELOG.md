@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.0] - 2021-01-04
+
+- Change login to only email/password
+- Disable new user registration
+- Change app colors
+- Fix annotation in chart update
+
 ## [1.4.1] - 2020-12-17
 
 - Fix wrong chart labels on X axis in record list
