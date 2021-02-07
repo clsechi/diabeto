@@ -10,9 +10,7 @@
           {{ toolbarTitle }}
         </q-toolbar-title>
 
-        <PeriodSelector
-          style="max-width: 150px"
-        />
+        <PeriodSelector />
       </q-toolbar>
     </q-header>
 
@@ -45,7 +43,7 @@
           <small class="q-caption">{{ email }}</small>
         </div>
       </div>
-      <q-list>
+      <q-list class="bg-grey-3">
         <q-item
           clickable
           :to="{ name: 'app' }"
