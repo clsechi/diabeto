@@ -111,14 +111,14 @@ const hourAverage = records => (
 const findHypoEvents = (dextros) => {
   const minTarget = 80;
   return dextros
-    .filter(dextro => dextro <= minTarget)
+    .filter(dextro => dextro < minTarget)
     .length;
 };
 
 const findHyperEvents = (dextros) => {
-  const maxTarget = 150;
+  const maxTarget = 160;
   return dextros
-    .filter(dextro => dextro >= maxTarget)
+    .filter(dextro => dextro > maxTarget)
     .length;
 };
 
@@ -133,6 +133,14 @@ const totalStats = (records) => {
   const hypoEvents = findHypoEvents(dextros);
   const hyperEvents = findHyperEvents(dextros);
 
+  const onTarget = count - (hyperEvents + hypoEvents);
+
+  const percentages = {
+    aboveTarget: ((hyperEvents * 100) / count).toFixed(),
+    belowTarget: ((hypoEvents * 100) / count).toFixed(),
+    onTarget: ((onTarget * 100) / count).toFixed(),
+  };
+
   return {
     count,
     average,
@@ -141,6 +149,8 @@ const totalStats = (records) => {
     hypoEvents,
     hyperEvents,
     averageUnit: 0,
+    onTarget,
+    percentages,
   };
 };
 

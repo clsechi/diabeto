@@ -28,14 +28,14 @@
         </div>
         <div class="col-6">
           <StatsCard
-            title="Eventos de hipo"
-            :value="stats.total.hypoEvents"
+            title="Dextros abaixo da Meta"
+            :value="hypoLabel"
           />
         </div>
         <div class="col-6">
           <StatsCard
-            title="Eventos de hiper"
-            :value="stats.total.hyperEvents"
+            title="Dextros acima da Meta"
+            :value="hyperLabel"
           />
         </div>
         <!-- <div class="col-6">
@@ -46,9 +46,29 @@
         </div> -->
         <div class="col-6">
           <StatsCard
+            title="Dextros da Meta"
+            :value="goodLabel"
+          />
+        </div>
+        <div class="col-6">
+          <StatsCard
             title="Total dextros"
             :value="stats.total.count"
           />
+        </div>
+        <div class="col-12">
+          <div class="row">
+            <div class="col-6 q-my-md">
+              <div class="q-mb-sm text-center text-weight-medium">
+                Tempo na meta
+              </div>
+              <PieChart
+                id="pie"
+                time-format="D/MM"
+                :records="pieData"
+              />
+            </div>
+          </div>
         </div>
         <div class="col-12 q-my-md">
           <div class="q-mb-sm text-center text-weight-medium">
@@ -100,6 +120,7 @@ import { mapGetters } from 'vuex';
 import StatsCard from './components/StatsCard';
 import LineChart from './components/LineChart';
 import ScatterChart from './components/ScatterChart';
+import PieChart from './components/PieChart';
 
 export default {
   name: 'DashboardIndex',
@@ -108,10 +129,50 @@ export default {
     StatsCard,
     LineChart,
     ScatterChart,
+    PieChart,
   },
 
   computed: {
     ...mapGetters('record', ['stats', 'records']),
+
+    goodLabel() {
+      const { onTarget } = this.stats.total;
+      const { onTarget: onTargetPercentage } = this.stats.total.percentages;
+      return `${onTarget} (${onTargetPercentage}%)`;
+    },
+
+    hyperLabel() {
+      const hyper = this.stats.total.hyperEvents;
+      const { aboveTarget } = this.stats.total.percentages;
+      return `${hyper} (${aboveTarget}%)`;
+    },
+
+    hypoLabel() {
+      const hypo = this.stats.total.hypoEvents;
+      const { belowTarget } = this.stats.total.percentages;
+      return `${hypo} (${belowTarget}%)`;
+    },
+
+    pieData() {
+      const aboveTarget = this.stats.total.hyperEvents;
+      const belowTarget = this.stats.total.hypoEvents;
+      const { onTarget } = this.stats.total;
+
+      return [
+        {
+          label: 'Acima da meta',
+          data: aboveTarget,
+        },
+        {
+          label: 'Abaixo da meta',
+          data: belowTarget,
+        },
+        {
+          label: 'Dentro da meta',
+          data: onTarget,
+        },
+      ];
+    },
   },
 };
 </script>
