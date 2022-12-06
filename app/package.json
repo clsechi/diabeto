@@ -33,7 +33,7 @@
     "vuelidate": "^0.7.7"
   },
   "devDependencies": {
-    "@quasar/app": "^2.2.11",
+    "@quasar/app": "^2.4.3",
     "@vue/eslint-config-airbnb": "^4.0.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.8.0",
